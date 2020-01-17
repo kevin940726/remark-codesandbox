@@ -17,7 +17,11 @@ _TBD_
 Run `git clone` and `cd`.
 
 ```bash
-yarn
+yarn # Install dependencies
+
+yarn test # Run tests
+
+yarn workspaces foreach run test-example # Run build on all examples
 ```
 
 ## License

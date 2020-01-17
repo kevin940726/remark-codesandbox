@@ -2,7 +2,7 @@
   "name": "mdx",
   "private": true,
   "scripts": {
-    "build": "node index.js"
+    "test-example": "node index.js"
   },
   "dependencies": {
     "@babel/core": "^7.8.0",
