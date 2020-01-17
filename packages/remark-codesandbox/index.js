@@ -5,7 +5,7 @@ const u = require('unist-builder');
 const { getParameters } = require('codesandbox/lib/api/define');
 const got = require('got');
 
-const CUSTOM_TEMPLATES = {
+const DEFAULT_CUSTOM_TEMPLATES = {
   react: {
     extends: 'new',
   },
@@ -15,24 +15,22 @@ const CUSTOM_TEMPLATES = {
   },
 };
 
-const cachedTemplates = new Map();
-
-async function getTemplate(templateID) {
-  if (cachedTemplates.has(templateID)) {
-    return cachedTemplates.get(templateID);
+async function getTemplate(templates, templateID, customTemplates) {
+  if (templates.has(templateID)) {
+    return templates.get(templateID);
   }
 
-  const baseTemplateID = CUSTOM_TEMPLATES[templateID]
-    ? CUSTOM_TEMPLATES[templateID].extends
+  const baseTemplateID = customTemplates[templateID]
+    ? customTemplates[templateID].extends
     : templateID;
 
-  if (cachedTemplates.has(baseTemplateID)) {
+  if (templates.has(baseTemplateID)) {
     const template = {
-      ...cachedTemplates.get(baseTemplateID),
-      ...(CUSTOM_TEMPLATES[templateID] || {}),
+      ...templates.get(baseTemplateID),
+      ...(customTemplates[templateID] || {}),
     };
 
-    cachedTemplates.set(templateID, template);
+    templates.set(templateID, template);
     return template;
   }
 
@@ -42,7 +40,7 @@ async function getTemplate(templateID) {
 
   const template = {
     ...data,
-    ...(CUSTOM_TEMPLATES[templateID] || {}),
+    ...(customTemplates[templateID] || {}),
   };
 
   // Construct files/directories mappings
@@ -78,12 +76,22 @@ async function getTemplate(templateID) {
 
   template.files = files;
 
-  cachedTemplates.set(templateID, template);
+  templates.set(templateID, template);
 
   return template;
 }
 
-function codesandbox({ mode = 'meta' } = {}) {
+function codesandbox({
+  mode = 'meta',
+  customTemplates = {},
+  iframeQuery,
+} = {}) {
+  const templates = new Map();
+  const customs = {
+    ...DEFAULT_CUSTOM_TEMPLATES,
+    ...customTemplates,
+  };
+
   return async function transformer(tree) {
     let title;
     const codes = [];
@@ -97,7 +105,7 @@ function codesandbox({ mode = 'meta' } = {}) {
     });
 
     for (const [node, _, parent] of codes) {
-      const meta = parseMeta(node.meta);
+      const meta = parseMeta(node.meta || '');
       const sandboxMeta = meta.codesandbox;
 
       if (!sandboxMeta) {
@@ -107,12 +115,15 @@ function codesandbox({ mode = 'meta' } = {}) {
       const [templateID, queryString] = sandboxMeta.split('?');
       const query = new URLSearchParams(queryString);
 
-      const template = await getTemplate(templateID);
+      const template = await getTemplate(templates, templateID, customs);
 
       template.title = title || template.title;
 
       if (!query.has('module')) {
-        query.set('module', template.entry);
+        query.set(
+          'module',
+          template.entry.startsWith('/') ? template.entry : `/${template.entry}`
+        );
       }
 
       const parameters = getParameters({
@@ -150,18 +161,20 @@ function codesandbox({ mode = 'meta' } = {}) {
           break;
         }
         case 'iframe': {
-          const iframeQuery = new URLSearchParams({
-            fontsize: '14px',
-            hidenavigation: 1,
-            theme: 'dark',
-          });
+          const iframeQueryParams = iframeQuery
+            ? new URLSearchParams(iframeQuery)
+            : new URLSearchParams({
+                fontsize: '14px',
+                hidenavigation: 1,
+                theme: 'dark',
+              });
           query.forEach((value, key) => {
-            iframeQuery.set(key, value);
+            iframeQueryParams.set(key, value);
           });
 
           const iframe = u('html', {
             value: `<iframe
-  src="https://codesandbox.io/embed/${sandbox_id}?${iframeQuery.toString()}"
+  src="https://codesandbox.io/embed/${sandbox_id}?${iframeQueryParams.toString()}"
   style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
   title="${template.title || ''}"
   allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb"
@@ -193,9 +206,14 @@ function parseMeta(metaString) {
   const meta = {};
 
   metaString.split(' ').forEach(str => {
-    const [key, value] = str.split('=');
+    const equalIndex = str.indexOf('=');
 
-    meta[key] = value;
+    if (equalIndex > 0) {
+      const key = str.slice(0, equalIndex);
+      const value = str.slice(equalIndex + 1);
+
+      meta[key] = value;
+    }
   });
 
   return meta;

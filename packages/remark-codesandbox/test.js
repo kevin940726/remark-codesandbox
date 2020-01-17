@@ -70,7 +70,7 @@ ReactDOM.render(
     );
     \`\`\`
 
-    [![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/sdy9z?module=src%2Findex.js)
+    [![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/sdy9z?module=%2Fsrc%2Findex.js)
     "
   `);
 });
@@ -98,7 +98,7 @@ ReactDOM.render(
     "The below code block will be replaced with an iFrame of embedded CodeSandbox.
 
     <iframe
-      src=\\"https://codesandbox.io/embed/sdy9z?fontsize=14px&hidenavigation=1&theme=dark&module=src%2Findex.js\\"
+      src=\\"https://codesandbox.io/embed/sdy9z?fontsize=14px&hidenavigation=1&theme=dark&module=%2Fsrc%2Findex.js\\"
       style=\\"width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;\\"
       title=\\"React\\"
       allow=\\"geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb\\"
@@ -150,7 +150,7 @@ export default function App() {
     );
     \`\`\`
 
-    [![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/sdy9z?module=src%2Findex.js)
+    [![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/sdy9z?module=%2Fsrc%2Findex.js)
 
     This one will render React component custom template
 
@@ -162,7 +162,7 @@ export default function App() {
     }
     \`\`\`
 
-    [![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/fc0vt?module=src%2FApp.js)
+    [![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/fc0vt?module=%2Fsrc%2FApp.js)
     "
   `);
 });
@@ -194,9 +194,122 @@ ReactDOM.render(
     The below code block will be replaced with an iFrame of embedded CodeSandbox.
 
     <iframe
-      src=\\"https://codesandbox.io/embed/sdy9z?fontsize=14px&hidenavigation=1&theme=dark&module=src%2Findex.js\\"
+      src=\\"https://codesandbox.io/embed/sdy9z?fontsize=14px&hidenavigation=1&theme=dark&module=%2Fsrc%2Findex.js\\"
       style=\\"width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;\\"
       title=\\"remark-codesandbox example\\"
+      allow=\\"geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb\\"
+      sandbox=\\"allow-modals allow-forms allow-popups allow-scripts allow-same-origin\\"
+    ></iframe>
+    "
+  `);
+});
+
+test('skip codesandbox', async () => {
+  const md = `
+The below code block will not create corresponding codesandbox.
+
+\`\`\`jsx
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+ReactDOM.render(
+  <h1>Hello remark-codesandbox!</h1>,
+  document.getElementById('root')
+);
+\`\`\`
+  `;
+
+  const tree = remark.parse(md);
+
+  await codesandbox()(tree);
+
+  expect(remark.stringify(tree)).toMatchInlineSnapshot(`
+    "The below code block will not create corresponding codesandbox.
+
+    \`\`\`jsx
+    import React from 'react';
+    import ReactDOM from 'react-dom';
+
+    ReactDOM.render(
+      <h1>Hello remark-codesandbox!</h1>,
+      document.getElementById('root')
+    );
+    \`\`\`
+    "
+  `);
+});
+
+test('custom templates', async () => {
+  const md = `
+The below code block will create codesandbox based on custom template.
+
+\`\`\`css codesandbox=react-style
+.App {
+  font-family: sans-serif;
+  text-align: center;
+  color: red;
+}
+\`\`\`
+  `;
+
+  const tree = remark.parse(md);
+
+  await codesandbox({
+    mode: 'iframe',
+    customTemplates: {
+      'react-style': {
+        extends: 'new',
+        entry: '/src/styles.css',
+      },
+    },
+  })(tree);
+
+  expect(remark.stringify(tree)).toMatchInlineSnapshot(`
+    "The below code block will create codesandbox based on custom template.
+
+    <iframe
+      src=\\"https://codesandbox.io/embed/vi9bn?fontsize=14px&hidenavigation=1&theme=dark&module=%2Fsrc%2Fstyles.css\\"
+      style=\\"width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;\\"
+      title=\\"React\\"
+      allow=\\"geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb\\"
+      sandbox=\\"allow-modals allow-forms allow-popups allow-scripts allow-same-origin\\"
+    ></iframe>
+    "
+  `);
+});
+
+test('iframe query', async () => {
+  const md = `
+The below code block will create codesandbox and inject custom iframe query.
+
+\`\`\`css codesandbox=react?fontsize=13
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+ReactDOM.render(
+  <h1>Hello remark-codesandbox!</h1>,
+  document.getElementById('root')
+);
+\`\`\`
+  `;
+
+  const tree = remark.parse(md);
+
+  await codesandbox({
+    mode: 'iframe',
+    iframeQuery: {
+      fontsize: 12,
+      hidenavigation: 0,
+    },
+  })(tree);
+
+  expect(remark.stringify(tree)).toMatchInlineSnapshot(`
+    "The below code block will create codesandbox and inject custom iframe query.
+
+    <iframe
+      src=\\"https://codesandbox.io/embed/sdy9z?fontsize=13&hidenavigation=0&module=%2Fsrc%2Findex.js\\"
+      style=\\"width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;\\"
+      title=\\"React\\"
       allow=\\"geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb\\"
       sandbox=\\"allow-modals allow-forms allow-popups allow-scripts allow-same-origin\\"
     ></iframe>
