@@ -1,12 +1,14 @@
 {
   "name": "remark-codesandbox",
+  "description": "🎩 Create CodeSandbox directly from code blocks",
   "version": "0.1.0",
   "author": "Kai Hao",
   "license": "MIT",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kevin940726/remark-codesandbox.git"
+    "url": "git+https://github.com/kevin940726/remark-codesandbox.git",
+    "directory": "packages/remark-codesandbox"
   },
   "scripts": {
     "test": "jest"
