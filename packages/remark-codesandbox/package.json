@@ -1,6 +1,6 @@
 {
   "name": "remark-codesandbox",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "author": "Kai Hao",
   "license": "MIT",
   "main": "index.js",
