@@ -1,0 +1,29 @@
+{
+  "name": "remark-codesandbox",
+  "version": "0.0.0",
+  "author": "Kai Hao",
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevin940726/remark-codesandbox.git"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "dependencies": {
+    "codesandbox": "^2.1.11",
+    "got": "^10.2.2",
+    "mdast-util-to-string": "^1.0.7",
+    "unist-builder": "^2.0.2",
+    "unist-util-is": "^4.0.1",
+    "unist-util-visit": "^2.0.1"
+  },
+  "devDependencies": {
+    "remark": "^11.0.2"
+  },
+  "files": [
+    "gatsby.js",
+    "index.js"
+  ]
+}

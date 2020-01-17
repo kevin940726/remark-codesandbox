@@ -1,0 +1,31 @@
+{
+  "name": "remark-codesandbox-mono",
+  "version": "0.0.0",
+  "author": "Kai Hao",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "examples/*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevin940726/remark-codesandbox.git"
+  },
+  "scripts": {
+    "test": "jest",
+    "release": "yarn workspace remark-codesandbox npm publish"
+  },
+  "devDependencies": {
+    "jest": "^24.9.0",
+    "jest-pnp-resolver": "^1.2.1",
+    "prettier": "1.19.1"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "jest": {
+    "resolver": "jest-pnp-resolver"
+  }
+}
