@@ -14,6 +14,7 @@
   },
   "scripts": {
     "test": "jest",
+    "bump": "yarn workspace remark-codesandbox version",
     "release": "yarn workspace remark-codesandbox npm publish"
   },
   "devDependencies": {
