@@ -14,7 +14,7 @@
 ## Installation
 
 ```bash
-yarn add remark-codesandbox
+yarn add -D remark-codesandbox
 ```
 
 ## Getting Started
