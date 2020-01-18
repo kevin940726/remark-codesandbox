@@ -1,6 +1,6 @@
 # remark-codesandbox
 
-🎩 Create CodeSandbox directly from code blocks
+🎩 A [remark](https://remark.js.org/) plugin to create [CodeSandbox](https://codesandbox.io/) directly from code blocks
 
 ## Features
 
