@@ -175,7 +175,7 @@ yarn # Install dependencies
 
 yarn test # Run tests
 
-yarn workspaces foreach run test-example # Run build on all examples
+yarn example # Run build on all examples
 
 yarn bump [patch|minor|major] # Bump version of remark-codesandbox
 
