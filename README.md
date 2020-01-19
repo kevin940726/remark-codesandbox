@@ -2,6 +2,8 @@
 
 🎩 A [remark](https://remark.js.org/) plugin to create [CodeSandbox](https://codesandbox.io/) directly from code blocks
 
+![Demo transformation](demo.png)
+
 ## Features
 
 - [x] 🔗 Directly create CodeSandbox urls from code blocks
