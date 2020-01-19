@@ -28,5 +28,14 @@
   "files": [
     "gatsby.js",
     "index.js"
+  ],
+  "keywords": [
+    "codesandbox",
+    "remark",
+    "remark-plugin",
+    "mdx",
+    "gatsby",
+    "storybook-addon-docs",
+    "docz"
   ]
 }
