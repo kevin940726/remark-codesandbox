@@ -10,6 +10,13 @@
 - [x] 🎉 Support [MDX](https://mdxjs.com/), [Gatsby](https://www.gatsbyjs.org/), [Storybook Docs](https://storybook.js.org/docs/basics/introduction/), [docz](https://www.docz.site/), etc...
 - [x] 📦 Support bringing your own custom templates
 - [x] ⚡ One line setup, highly customizable
+- [x] 💪 Great for library authors to demonstrate usages directly from documentation!
+
+## Examples
+
+_TBD_
+
+Please see the [test cases](https://github.com/kevin940726/remark-codesandbox/blob/master/packages/remark-codesandbox/test.js) for now for example usages.
 
 ## Installation
 
@@ -22,12 +29,67 @@ yarn add -D remark-codesandbox
 Import `remark-codesandbox` to your remark plugins.
 
 ```js
+const codesandbox = require('remark-codesandbox');
+```
+
+[**remark**](https://github.com/remarkjs/remark/blob/master/doc/plugins.md#using-plugins)
+
+```js
+remark().use(codesandbox, { mode: 'button' });
+```
+
+[**MDX**](https://mdxjs.com/advanced/plugins#using-remark-and-rehype-plugins)
+
+```js
 mdx(mdxCode, {
   remarkPlugins: [[codesandbox, { mode: 'button' }]],
 });
 ```
 
-Then add a special _meta tag_ to your code blocks.
+[**Gatsby (gatsby-plugin-mdx)**](https://www.gatsbyjs.org/docs/mdx/plugins/#remark-plugins)
+
+```js
+module.exports = {
+  plugins: [
+    {
+      resolve: 'gatsby-plugin-mdx',
+      options: {
+        remarkPlugins: [[codesandbox, { mode: 'button' }]],
+        // Or with Gatsby remark plugins:
+        // gatsbyRemarkPlugins: [
+        //   {
+        //     resolve: 'remark-codesandbox/gatsby',
+        //     options: {
+        //       mode: 'button'
+        //     },
+        //   },
+        // ],
+      },
+    },
+  ],
+};
+```
+
+[**Storybook docs**](https://github.com/storybookjs/storybook/tree/master/addons/docs#manual-configuration)
+
+```js
+config.module.rules.push({
+  test: /\.(stories|story)\.mdx$/,
+  use: [
+    {
+      loader: '@mdx-js/loader',
+      options: {
+        compilers: [createCompiler({})],
+        remarkPlugins: [[codesandbox, { mode: 'button' }]],
+      },
+    },
+  ],
+});
+```
+
+## Usage
+
+Add a special _meta tag_ to your code blocks.
 
 ````md
 ```js codesandbox=react
@@ -43,7 +105,7 @@ ReactDOM.render(
 
 And..., that's it!
 
-The above example will append a CodeSandbox button after the code block. Clicking on it will open the generated sandbox. How cool is that!
+The above example with `mode` being set to `button` will append a CodeSandbox button after the code block. Clicking on it will open the generated sandbox. How cool is that!
 
 There are also other **modes** and additional configurations, follow the [documentation](#documentation) below for more information.
 
