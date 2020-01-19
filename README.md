@@ -2,6 +2,8 @@
 
 🎩 A [remark](https://remark.js.org/) plugin to create [CodeSandbox](https://codesandbox.io/) directly from code blocks
 
+[![npm version](https://badge.fury.io/js/remark-codesandbox.svg)](https://badge.fury.io/js/remark-codesandbox)
+
 <img src="demo.png" alt="Demo transformation" height="500" />
 
 ## Features
