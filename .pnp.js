@@ -2314,6 +2314,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"
         }]
       ]],
+      ["dedent", [
+        ["npm:0.7.0", {
+          "packageLocation": "./.yarn/cache/dedent-npm-0.7.0-2dbb45a4c5-1.zip/node_modules/dedent/",
+          "packageDependencies": [
+            ["dedent", "npm:0.7.0"]
+          ],
+          "linkType": "HARD"
+        }]
+      ]],
       ["deep-extend", [
         ["npm:0.6.0", {
           "packageLocation": "./.yarn/cache/deep-extend-npm-0.6.0-e182924219-1.zip/node_modules/deep-extend/",
@@ -6655,6 +6664,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["remark-codesandbox", "workspace:packages/remark-codesandbox"],
             ["codesandbox", "npm:2.1.11"],
+            ["dedent", "npm:0.7.0"],
             ["got", "npm:10.2.2"],
             ["mdast-util-to-string", "npm:1.0.7"],
             ["remark", "npm:11.0.2"],

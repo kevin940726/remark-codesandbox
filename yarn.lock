@@ -1942,6 +1942,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dedent@npm:^0.7.0":
+  version: 0.7.0
+  resolution: "dedent@npm:0.7.0"
+  checksum: b080568e7bd6cc0edd43f7dad691b54458a8ad6cb29f0ed5c94ad65518da3387f6c60c1f29fa3b1d3aecc6c0153b3c7ac363ab2ddb4f32e628470a4a41d740f1
+  languageName: node
+  linkType: hard
+
 "deep-extend@npm:^0.6.0":
   version: 0.6.0
   resolution: "deep-extend@npm:0.6.0"
@@ -5820,6 +5827,7 @@ __metadata:
   resolution: "remark-codesandbox@workspace:packages/remark-codesandbox"
   dependencies:
     codesandbox: ^2.1.11
+    dedent: ^0.7.0
     got: ^10.2.2
     mdast-util-to-string: ^1.0.7
     remark: ^11.0.2

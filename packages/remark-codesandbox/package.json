@@ -22,6 +22,7 @@
     "unist-util-visit": "^2.0.1"
   },
   "devDependencies": {
+    "dedent": "^0.7.0",
     "remark": "^11.0.2"
   },
   "files": [
