@@ -2,7 +2,7 @@
 
 🎩 A [remark](https://remark.js.org/) plugin to create [CodeSandbox](https://codesandbox.io/) directly from code blocks
 
-![Demo transformation](demo.png)
+<img src="demo.png" alt="Demo transformation" height="500" />
 
 ## Features
 
