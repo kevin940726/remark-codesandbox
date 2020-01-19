@@ -4,7 +4,7 @@
 
 [![npm version](https://badge.fury.io/js/remark-codesandbox.svg)](https://badge.fury.io/js/remark-codesandbox)
 
-<img src="demo.png" alt="Demo transformation" height="500" />
+<img src="demo.png" alt="Demo transformation" width="400" />
 
 ## Features
 
