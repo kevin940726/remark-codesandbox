@@ -91,6 +91,26 @@ function codesandbox(options = {}) {
     ...DEFAULT_CUSTOM_TEMPLATES,
     ...(options.customTemplates || {}),
   };
+  const defaultQuery =
+    mode === 'iframe'
+      ? {
+          fontsize: '14px',
+          hidenavigation: 1,
+          theme: 'dark',
+        }
+      : undefined;
+
+  let baseQuery = defaultQuery;
+
+  if (typeof options.query !== 'undefined') {
+    baseQuery = options.query;
+  } else if (typeof options.iframeQuery !== 'undefined') {
+    // DEPRECATED: To support the legacy iframeQuery key
+    console.warn(
+      `options.iframeQuery is now deprecated and will be removed in the upcoming version, please use options.query instead.`
+    );
+    baseQuery = options.iframeQuery;
+  }
 
   return async function transformer(tree) {
     let title;
@@ -115,7 +135,7 @@ function codesandbox(options = {}) {
       }
 
       const [templateID, queryString] = sandboxMeta.split('?');
-      const query = mergeQuery(options.query, queryString);
+      const query = mergeQuery(baseQuery, queryString);
 
       const template = await getTemplate(
         templates,
@@ -171,23 +191,10 @@ function codesandbox(options = {}) {
           break;
         }
         case 'iframe': {
-          const iframeQueryParams = mergeQuery(
-            // To support the legacy iframeQuery key
-            options.iframeQuery
-              ? options.iframeQuery
-              : // We have a different defaults of query for iframe
-                {
-                  fontsize: '14px',
-                  hidenavigation: 1,
-                  theme: 'dark',
-                },
-            query
-          );
-
           // Construct the iframe AST
           const iframe = u('html', {
             value: `<iframe
-  src="https://codesandbox.io/embed/${sandbox_id}?${iframeQueryParams.toString()}"
+  src="https://codesandbox.io/embed/${sandbox_id}?${query.toString()}"
   style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
   title="${template.title || ''}"
   allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb"

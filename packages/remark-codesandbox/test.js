@@ -263,7 +263,8 @@ describe('custom templates', () => {
   });
 });
 
-describe('iframe query', () => {
+// Legacy option
+describe('DEPRECATED: iframe query', () => {
   let processor;
 
   beforeAll(() => {
@@ -303,6 +304,89 @@ describe('iframe query', () => {
         allow=\\"geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb\\"
         sandbox=\\"allow-modals allow-forms allow-popups allow-scripts allow-same-origin\\"
       ></iframe>
+      "
+    `);
+  });
+});
+
+describe('query with mode iframe', () => {
+  let processor;
+
+  beforeAll(() => {
+    processor = remark().use(codesandbox, {
+      mode: 'iframe',
+      query: {
+        fontsize: 12,
+        hidenavigation: 0,
+      },
+    });
+  });
+
+  test('with inline override', async () => {
+    const md = dedent`
+      The below code block will create codesandbox and inject custom iframe query.
+
+      \`\`\`css codesandbox=react?fontsize=13
+      import React from 'react';
+      import ReactDOM from 'react-dom';
+
+      ReactDOM.render(
+        <h1>Hello remark-codesandbox!</h1>,
+        document.getElementById('root')
+      );
+      \`\`\`\n
+    `;
+
+    const { contents } = await processor.process(md);
+
+    expect(contents).toMatchInlineSnapshot(`
+      "The below code block will create codesandbox and inject custom iframe query.
+
+      <iframe
+        src=\\"https://codesandbox.io/embed/sdy9z?fontsize=13&hidenavigation=0&module=%2Fsrc%2Findex.js\\"
+        style=\\"width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;\\"
+        title=\\"React\\"
+        allow=\\"geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb\\"
+        sandbox=\\"allow-modals allow-forms allow-popups allow-scripts allow-same-origin\\"
+      ></iframe>
+      "
+    `);
+  });
+});
+
+describe('query with mode button', () => {
+  let processor;
+
+  beforeAll(() => {
+    processor = remark().use(codesandbox, {
+      mode: 'button',
+      query: {
+        fontsize: 12,
+        hidenavigation: 0,
+      },
+    });
+  });
+
+  test('with inline override', async () => {
+    const md = dedent`
+      The below code block will create codesandbox and inject custom query.
+
+      \`\`\`css codesandbox=react?fontsize=13
+      import React from 'react';
+      import ReactDOM from 'react-dom';
+
+      ReactDOM.render(
+        <h1>Hello remark-codesandbox!</h1>,
+        document.getElementById('root')
+      );
+      \`\`\`\n
+    `;
+
+    const { contents } = await processor.process(md);
+
+    expect(contents.slice(0, md.length)).toBe(md);
+    expect(contents.slice(md.length + 1)).toMatchInlineSnapshot(`
+      "[![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/sdy9z?fontsize=13&hidenavigation=0&module=%2Fsrc%2Findex.js)
       "
     `);
   });
