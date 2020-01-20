@@ -4,6 +4,9 @@ const toString = require('mdast-util-to-string');
 const u = require('unist-builder');
 const { getParameters } = require('codesandbox/lib/api/define');
 const got = require('got');
+// URLSearchParams is added to the global object in node v10
+const URLSearchParams =
+  global.URLSearchParams || require('url').URLSearchParams;
 
 const DEFAULT_CUSTOM_TEMPLATES = {
   react: {
@@ -81,21 +84,19 @@ async function getTemplate(templates, templateID, customTemplates) {
   return template;
 }
 
-function codesandbox({
-  mode = 'meta',
-  customTemplates = {},
-  iframeQuery,
-} = {}) {
+function codesandbox(options = {}) {
   const templates = new Map();
-  const customs = {
+  const mode = options.mode || 'meta';
+  const customTemplates = {
     ...DEFAULT_CUSTOM_TEMPLATES,
-    ...customTemplates,
+    ...(options.customTemplates || {}),
   };
 
   return async function transformer(tree) {
     let title;
     const codes = [];
 
+    // Walk the tree once and record everything we need
     visit(tree, (node, index, parent) => {
       if (!title && is(node, ['heading', { depth: 1 }])) {
         title = toString(node);
@@ -108,20 +109,27 @@ function codesandbox({
       const meta = parseMeta(node.meta || '');
       const sandboxMeta = meta.codesandbox;
 
+      // No `codesandbox` meta set, skipping
       if (!sandboxMeta) {
         continue;
       }
 
       const [templateID, queryString] = sandboxMeta.split('?');
-      const query = new URLSearchParams(queryString);
+      const query = mergeQuery(options.query, queryString);
 
-      const template = await getTemplate(templates, templateID, customs);
+      const template = await getTemplate(
+        templates,
+        templateID,
+        customTemplates
+      );
 
       template.title = title || template.title;
 
+      // If there is no predefined `module` key, then we assign it to the entry file
       if (!query.has('module')) {
         query.set(
           'module',
+          // `entry` doesn't start with leading slash, but `module` requires it
           template.entry.startsWith('/') ? template.entry : `/${template.entry}`
         );
       }
@@ -133,6 +141,7 @@ function codesandbox({
         },
       });
 
+      // TODO: We might want to support skipping or caching the result to save network requests when developing
       const { sandbox_id } = await got
         .post('https://codesandbox.io/api/v1/sandboxes/define', {
           json: {
@@ -155,23 +164,27 @@ function codesandbox({
             ]),
           ]);
 
+          // Insert the button directly after the code block
           const index = parent.children.indexOf(node);
           parent.children.splice(index + 1, 0, button);
 
           break;
         }
         case 'iframe': {
-          const iframeQueryParams = iframeQuery
-            ? new URLSearchParams(iframeQuery)
-            : new URLSearchParams({
-                fontsize: '14px',
-                hidenavigation: 1,
-                theme: 'dark',
-              });
-          query.forEach((value, key) => {
-            iframeQueryParams.set(key, value);
-          });
+          const iframeQueryParams = mergeQuery(
+            // To support the legacy iframeQuery key
+            options.iframeQuery
+              ? options.iframeQuery
+              : // We have a different defaults of query for iframe
+                {
+                  fontsize: '14px',
+                  hidenavigation: 1,
+                  theme: 'dark',
+                },
+            query
+          );
 
+          // Construct the iframe AST
           const iframe = u('html', {
             value: `<iframe
   src="https://codesandbox.io/embed/${sandbox_id}?${iframeQueryParams.toString()}"
@@ -182,6 +195,7 @@ function codesandbox({
 ></iframe>`,
           });
 
+          // Replace the code block with the iframe
           const index = parent.children.indexOf(node);
           parent.children.splice(index, 1, iframe);
 
@@ -189,6 +203,7 @@ function codesandbox({
         }
         case 'meta':
         default: {
+          // TODO: We might still want to make this happen regardless of the mode?
           node.data = node.data || {};
           node.data.hProperties = node.data.hProperties || {};
 
@@ -217,6 +232,24 @@ function parseMeta(metaString) {
   });
 
   return meta;
+}
+
+function mergeQuery(baseQuery, ...queries) {
+  const query = new URLSearchParams();
+
+  // Interesting that chaining multiple URLSearchParams calls returns a single one
+  // So baseQuery could be either `string`, `object`, `URLSearchParams`, or even `undefined`
+  new URLSearchParams(baseQuery).forEach((value, key) => {
+    query.set(key, value);
+  });
+
+  queries.forEach(params => {
+    new URLSearchParams(params).forEach((value, key) => {
+      query.set(key, value);
+    });
+  });
+
+  return query;
 }
 
 module.exports = codesandbox;

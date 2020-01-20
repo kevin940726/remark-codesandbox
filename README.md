@@ -161,15 +161,22 @@ It's also possible to customize the url by appending _query parameters_. Just ap
 
 The plugin accepts a set of options with the following default values:
 
-```js
+```ts
 {
   remarkPlugins: [
     codesandbox,
     {
       // Can be one of `meta`, `iframe`, or `button`
       mode: 'meta',
-      // When using iframe mode, the query here will be appended to the generated iframe url
-      iframeQuery: undefined,
+      // The query here will be appended to the generated url for every sandbox. Can be `string`, `object`, `URLSearchParams` instance, or `undefined`
+      query:
+        mode === 'iframe'
+          ? {
+              fontsize: '14px',
+              hidenavigation: 1,
+              theme: 'dark',
+            }
+          : undefined,
       // Define custom templates or override existing ones
       customTemplates: {},
     },
@@ -185,19 +192,22 @@ The plugin accepts a set of options with the following default values:
 
   [![Edit React](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/react-new?fontsize=14&hidenavigation=1&theme=dark)
 
-### `iframeQuery`
+### `query`
 
-By default the iframe will be appended by the default query params below:
+By default there will be no query except for the `module` key appended to the generated url. You can customize query in every url here. However, when the `mode` is `iframe`, there will be a set of custom queries predefined below.
 
 ```js
-{
-  fontsize: '14px',
-  hidenavigation: 1,
-  theme: 'dark',
-}
+query =
+  mode === 'iframe'
+    ? {
+        fontsize: '14px',
+        hidenavigation: 1,
+        theme: 'dark',
+      }
+    : undefined;
 ```
 
-You can override them by passing `iframeQuery` to the options. Note that the object passed will **replace** the default object, be sure to include the default query again if you want to keep them.
+You can override them by passing `query` to the options. Note that the object passed will **replace** the default object, be sure to include the default query again if you want to keep them.
 
 ### `customTemplates`
 
