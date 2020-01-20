@@ -59,7 +59,7 @@ describe('mode: button', () => {
   let processor;
 
   beforeAll(() => {
-    processor = remark().use(codesandbox, { mode: 'button' });
+    processor = remark().use(codesandbox, { mode: 'button', autoDeploy: true });
   });
 
   test('simple markdown', async () => {
@@ -148,7 +148,7 @@ describe('mode: iframe', () => {
   let processor;
 
   beforeAll(() => {
-    processor = remark().use(codesandbox, { mode: 'iframe' });
+    processor = remark().use(codesandbox, { mode: 'iframe', autoDeploy: true });
   });
 
   test('simple markdown', async () => {
@@ -230,6 +230,7 @@ describe('custom templates', () => {
           entry: '/src/styles.css',
         },
       },
+      autoDeploy: true,
     });
   });
 
@@ -274,6 +275,7 @@ describe('DEPRECATED: iframe query', () => {
         fontsize: 12,
         hidenavigation: 0,
       },
+      autoDeploy: true,
     });
   });
 
@@ -319,6 +321,7 @@ describe('query with mode iframe', () => {
         fontsize: 12,
         hidenavigation: 0,
       },
+      autoDeploy: true,
     });
   });
 
@@ -364,6 +367,7 @@ describe('query with mode button', () => {
         fontsize: 12,
         hidenavigation: 0,
       },
+      autoDeploy: true,
     });
   });
 
@@ -389,5 +393,46 @@ describe('query with mode button', () => {
       "[![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/sdy9z?fontsize=13&hidenavigation=0&module=%2Fsrc%2Findex.js)
       "
     `);
+  });
+});
+
+describe('autoDeploy false', () => {
+  let processor;
+
+  beforeAll(() => {
+    processor = remark().use(codesandbox, {
+      mode: 'button',
+    });
+  });
+
+  test('with button', async () => {
+    const md = dedent`
+      The below code block will create codesandbox and inject custom query.
+
+      \`\`\`css codesandbox=react
+      import React from 'react';
+      import ReactDOM from 'react-dom';
+
+      ReactDOM.render(
+        <h1>Hello remark-codesandbox!</h1>,
+        document.getElementById('root')
+      );
+      \`\`\`\n
+    `;
+
+    const { contents } = await processor.process(md);
+
+    expect(contents.slice(0, md.length)).toBe(md);
+    const button = contents.slice(md.length + 1).trim();
+
+    const beginning =
+      '[![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/api/v1/sandboxes/define?parameters=';
+    const ending = '&query=module%3D%252Fsrc%252Findex.js)';
+
+    expect(button.startsWith(beginning)).toBe(true);
+    expect(button.endsWith(ending)).toBe(true);
+    expect(button.slice(beginning.length, -ending.length)).toMatch(
+      /[-_a-zA-Z0-9]+/
+    );
   });
 });

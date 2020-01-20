@@ -37,10 +37,13 @@ async function getTemplate(templates, templateID, customTemplates) {
     return template;
   }
 
+  let data;
   try {
-    const { data } = await got(
+    const response = await got(
       `https://codesandbox.io/api/v1/sandboxes/${baseTemplateID}`
     ).json();
+
+    data = response.data;
   } catch (err) {
     console.error(
       `Failed to get the sandbox template: ${baseTemplateID} (via ${templateID})`
@@ -106,6 +109,7 @@ function codesandbox(options = {}) {
           theme: 'dark',
         }
       : undefined;
+  const autoDeploy = options.autoDeploy || false;
 
   let baseQuery = defaultQuery;
 
@@ -168,17 +172,27 @@ function codesandbox(options = {}) {
         },
       });
 
-      // TODO: We might want to support skipping or caching the result to save network requests when developing
-      const { sandbox_id } = await got
-        .post('https://codesandbox.io/api/v1/sandboxes/define', {
-          json: {
-            parameters,
-            json: 1,
-          },
-        })
-        .json();
+      let url;
 
-      const url = `https://codesandbox.io/s/${sandbox_id}?${query.toString()}`;
+      if (autoDeploy) {
+        const { sandbox_id } = await got
+          .post('https://codesandbox.io/api/v1/sandboxes/define', {
+            json: {
+              parameters,
+              json: 1,
+            },
+          })
+          .json();
+
+        url = `https://codesandbox.io/s/${sandbox_id}?${query.toString()}`;
+      } else {
+        url = `https://codesandbox.io/api/v1/sandboxes/define?${new URLSearchParams(
+          {
+            parameters,
+            query,
+          }
+        ).toString()}`;
+      }
 
       switch (mode) {
         case 'button': {
@@ -201,7 +215,7 @@ function codesandbox(options = {}) {
           // Construct the iframe AST
           const iframe = u('html', {
             value: `<iframe
-  src="https://codesandbox.io/embed/${sandbox_id}?${query.toString()}"
+  src="${autoDeploy ? url.replace('/s/', '/embed/') : `${url}&embed=1`}"
   style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
   title="${template.title || ''}"
   allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb"

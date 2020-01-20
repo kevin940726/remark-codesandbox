@@ -179,6 +179,8 @@ The plugin accepts a set of options with the following default values:
           : undefined,
       // Define custom templates or override existing ones
       customTemplates: {},
+      // Whether to automatically deploy code blocks via CodeSandbox API
+      autoDeploy: false,
     },
   ];
 }
@@ -241,6 +243,20 @@ Not only official templates you can extend from, but also any custom sandbox.
 ```
 
 It's recommended to create your own CodeSandbox from the UI and alias it to a custom readable name here. Remember to **freeze** it to prevent accidental changes.
+
+### `autoDeploy`
+
+By default, the url is generated locally without calling the [official API](https://codesandbox.io/docs/importing#define-api). The API would only be called when the user clicks the button or views the iframe. This is done by manually construct the `parameters` locally, and compress them via `lz-string`. Note that there is a [general guideline](https://stackoverflow.com/a/417184/4699228) to keep urls under 2000 characters, longer urls might not work in some browsers.
+
+You can bypass this by passing `true` to `autoDeploy`. Results in a much shorter url with an unique `codesandbox_id` in the url. The drawback is that it takes more time to generate the url.
+
+A common practice would be to only set it to `true` in production (or when the result urls are too long for the browsers you support), while keeping it `false` when developing for faster reload time.
+
+```js
+{
+  autoDeploy: process.env.NODE_ENV === 'production';
+}
+```
 
 ## Contributing
 
