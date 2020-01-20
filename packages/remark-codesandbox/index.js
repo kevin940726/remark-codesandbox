@@ -37,9 +37,16 @@ async function getTemplate(templates, templateID, customTemplates) {
     return template;
   }
 
-  const { data } = await got(
-    `https://codesandbox.io/api/v1/sandboxes/${baseTemplateID}`
-  ).json();
+  try {
+    const { data } = await got(
+      `https://codesandbox.io/api/v1/sandboxes/${baseTemplateID}`
+    ).json();
+  } catch (err) {
+    console.error(
+      `Failed to get the sandbox template: ${baseTemplateID} (via ${templateID})`
+    );
+    throw err;
+  }
 
   const template = {
     ...data,
