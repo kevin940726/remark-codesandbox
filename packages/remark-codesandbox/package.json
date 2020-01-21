@@ -11,11 +11,13 @@
     "directory": "packages/remark-codesandbox"
   },
   "scripts": {
-    "test": "jest"
+    "test:node": "jest --env node",
+    "test:browser": "jest --env jsdom",
+    "test": "yarn test:node && yarn test:browser"
   },
   "dependencies": {
     "codesandbox": "^2.1.11",
-    "got": "^10.2.2",
+    "isomorphic-fetch": "^2.2.1",
     "mdast-util-to-string": "^1.0.7",
     "unist-builder": "^2.0.2",
     "unist-util-is": "^4.0.1",
