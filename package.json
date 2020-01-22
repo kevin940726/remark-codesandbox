@@ -14,8 +14,10 @@
   },
   "scripts": {
     "test": "yarn workspaces foreach run test",
+    "build": "yarn workspaces foreach run build",
     "example": "yarn workspaces foreach run build-example",
     "bump": "yarn workspace remark-codesandbox version",
+    "prerelease": "yarn build && yarn test",
     "release": "yarn workspace remark-codesandbox npm publish"
   },
   "devDependencies": {

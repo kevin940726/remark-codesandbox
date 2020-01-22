@@ -5,6 +5,7 @@
   "author": "Kai Hao",
   "license": "MIT",
   "main": "index.js",
+  "browser": "dist/remark-codesandbox.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kevin940726/remark-codesandbox.git",
@@ -13,7 +14,8 @@
   "scripts": {
     "test:node": "jest --env node",
     "test:browser": "jest --env jsdom",
-    "test": "yarn test:node && yarn test:browser"
+    "test": "yarn test:node && yarn test:browser",
+    "build": "microbundle build -i index.js -o dist -f cjs"
   },
   "dependencies": {
     "codesandbox": "^2.1.11",
@@ -24,12 +26,15 @@
     "unist-util-visit": "^2.0.1"
   },
   "devDependencies": {
+    "babel-plugin-transform-async-to-promises": "^0.8.15",
     "dedent": "^0.7.0",
+    "microbundle": "^0.11.0",
     "remark": "^11.0.2"
   },
   "files": [
     "gatsby.js",
-    "index.js"
+    "index.js",
+    "dist"
   ],
   "keywords": [
     "codesandbox",
