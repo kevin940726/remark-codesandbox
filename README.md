@@ -6,6 +6,10 @@
 
 <img src="demo.png" alt="Demo transformation" width="400" />
 
+**Try it online on CodeSandbox!** (Yep, we're demoing CodeSandbox inside CodeSandbox, why not!?)
+
+[![Edit remark-codesandbox demo](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/kind-lamport-7n2uv?autoresize=1&fontsize=14&hidenavigation=1&module=%2Fsrc%2Findex.md&theme=dark)
+
 ## Features
 
 - [x] 🔗 Directly create CodeSandbox urls from code blocks
@@ -18,9 +22,8 @@
 
 ## Examples
 
-_TBD_
-
-Please see the [test cases](https://github.com/kevin940726/remark-codesandbox/blob/master/packages/remark-codesandbox/test.js) for now for example usages.
+- [**`reaviz`**](https://reaviz.io/?path=/docs/docs-chart-types-area-chart--page) documentation is built with [Storybook docs](https://github.com/storybookjs/storybook/tree/master/addons/docs#manual-configuration) and `remark-codesandbox`.
+- The [**test cases**](https://github.com/kevin940726/remark-codesandbox/blob/master/packages/remark-codesandbox/test.js) of this project.
 
 ## Installation
 
