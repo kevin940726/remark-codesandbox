@@ -1,12 +1,19 @@
+'use strict';
+
 const visit = require('unist-util-visit');
 const is = require('unist-util-is');
 const toString = require('mdast-util-to-string');
 const u = require('unist-builder');
 const { getParameters } = require('codesandbox/lib/api/define');
-const got = require('got');
-// URLSearchParams is added to the global object in node v10
-const URLSearchParams =
-  global.URLSearchParams || require('url').URLSearchParams;
+const fetch = require('isomorphic-fetch');
+
+let URLSearchParams;
+if (typeof window === 'undefined') {
+  // URLSearchParams is added to the global object in node v10
+  URLSearchParams = global.URLSearchParams || require('url').URLSearchParams;
+} else {
+  URLSearchParams = window.URLSearchParams;
+}
 
 const DEFAULT_CUSTOM_TEMPLATES = {
   react: {
@@ -39,9 +46,9 @@ async function getTemplate(templates, templateID, customTemplates) {
 
   let data;
   try {
-    const response = await got(
+    const response = await fetch(
       `https://codesandbox.io/api/v1/sandboxes/${baseTemplateID}`
-    ).json();
+    ).then(res => res.json());
 
     data = response.data;
   } catch (err) {
@@ -175,14 +182,14 @@ function codesandbox(options = {}) {
       let url;
 
       if (autoDeploy) {
-        const { sandbox_id } = await got
-          .post('https://codesandbox.io/api/v1/sandboxes/define', {
-            json: {
-              parameters,
-              json: 1,
-            },
-          })
-          .json();
+        const { sandbox_id } = await fetch(
+          'https://codesandbox.io/api/v1/sandboxes/define',
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ parameters, json: 1 }),
+          }
+        ).then(res => res.json());
 
         url = `https://codesandbox.io/s/${sandbox_id}?${query.toString()}`;
       } else {
