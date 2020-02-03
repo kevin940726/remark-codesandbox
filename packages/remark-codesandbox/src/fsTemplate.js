@@ -17,7 +17,9 @@ async function fsTemplate(directoryPath, file) {
     );
   }
 
-  const absDirectoryPath = path.resolve(path.dirname(file.path), directoryPath);
+  const absDirectoryPath = path.isAbsolute(directoryPath)
+    ? directoryPath
+    : path.resolve(path.dirname(file.path), directoryPath);
 
   const filePaths = await readdir(absDirectoryPath, [
     '.gitignore',

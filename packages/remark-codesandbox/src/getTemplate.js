@@ -25,10 +25,10 @@ async function getTemplate(templates, templateID, customTemplates, file) {
       throw new Error(
         '"file:" template is not supported in browser environment!'
       );
-    } else {
-      const directoryPath = baseTemplateID.slice('file:'.length);
-      data = await require('./fsTemplate')(directoryPath, file);
     }
+
+    const directoryPath = baseTemplateID.slice('file:'.length);
+    data = await require('./fsTemplate')(directoryPath, file);
   } else {
     try {
       const response = await fetch(

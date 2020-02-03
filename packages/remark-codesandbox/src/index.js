@@ -80,7 +80,6 @@ function codesandbox(options = {}) {
       }
 
       const [templateID, queryString] = sandboxMeta.split('?');
-      const query = mergeQuery(baseQuery, queryString);
 
       const template = await getTemplate(
         templates,
@@ -90,6 +89,8 @@ function codesandbox(options = {}) {
       );
 
       template.title = title || template.title;
+
+      const query = mergeQuery(baseQuery, template.query, queryString);
 
       // If there is no predefined `module` key, then we assign it to the entry file
       if (!query.has('module')) {

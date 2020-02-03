@@ -1,11 +1,28 @@
 const codesandbox = require('remark-codesandbox');
+const path = require('path');
 
 module.exports = {
   plugins: [
     {
       resolve: 'gatsby-plugin-mdx',
       options: {
-        remarkPlugins: [[codesandbox, { mode: 'button' }]],
+        remarkPlugins: [
+          [
+            codesandbox,
+            {
+              mode: 'button',
+              customTemplates: {
+                'vanilla-console': {
+                  extends: `file:${path.resolve('./src/vanilla-template/')}`,
+                  entry: 'src/index.js',
+                  query: {
+                    previewwindow: 'console',
+                  },
+                },
+              },
+            },
+          ],
+        ],
       },
     },
     {
