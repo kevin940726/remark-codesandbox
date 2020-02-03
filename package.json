@@ -13,7 +13,9 @@
     "url": "git+https://github.com/kevin940726/remark-codesandbox.git"
   },
   "scripts": {
-    "test": "yarn workspaces foreach run test",
+    "test:node": "jest --env node",
+    "test:browser": "jest --env jsdom",
+    "test": "yarn test:node && yarn test:browser",
     "build": "yarn workspaces foreach run build",
     "example": "yarn workspaces foreach run build-example",
     "bump": "yarn workspace remark-codesandbox version",
@@ -30,6 +32,10 @@
     "trailingComma": "es5"
   },
   "jest": {
-    "resolver": "jest-pnp-resolver"
+    "resolver": "jest-pnp-resolver",
+    "testPathIgnorePatterns": [
+      "node_modules",
+      ".cache"
+    ]
   }
 }

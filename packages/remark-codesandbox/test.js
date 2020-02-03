@@ -1,11 +1,19 @@
 /**
  * These tests actually don't make any mock calls,
- * they calls the official APIs like in e2e testing.
- * They might occasionally fail due to network issues.
+ * they call the official APIs like in e2e testing.
+ * They might occasionally fail due to network issues or when API changed upstream.
  */
 const remark = require('remark');
 const dedent = require('dedent');
+const path = require('path');
 const codesandbox = require('./');
+
+function createFile(contents) {
+  return {
+    contents,
+    path: path.resolve(__dirname, 'readme.md'),
+  };
+}
 
 describe('default mode: meta', () => {
   let processor;
@@ -29,7 +37,7 @@ describe('default mode: meta', () => {
       \`\`\`\n
     `;
 
-    const { contents } = await processor.process(md);
+    const { contents } = await processor.process(createFile(md));
 
     expect(contents).toBe(md);
   });
@@ -49,7 +57,7 @@ describe('default mode: meta', () => {
       \`\`\`\n
     `;
 
-    const { contents } = await processor.process(md);
+    const { contents } = await processor.process(createFile(md));
 
     expect(contents).toBe(md);
   });
@@ -77,11 +85,11 @@ describe('mode: button', () => {
       \`\`\`\n
     `;
 
-    const { contents } = await processor.process(md);
+    const { contents } = await processor.process(createFile(md));
 
     expect(contents.slice(0, md.length)).toBe(md);
     expect(contents.slice(md.length + 1)).toMatchInlineSnapshot(`
-      "[![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/sdy9z?module=%2Fsrc%2Findex.js)
+      "[![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/r1swv?module=%2Fsrc%2Findex.js)
       "
     `);
   });
@@ -111,7 +119,7 @@ describe('mode: button', () => {
       \`\`\`\n
     `;
 
-    const { contents } = await processor.process(md);
+    const { contents } = await processor.process(createFile(md));
 
     expect(contents).toMatchInlineSnapshot(`
       "The below code block will have a **Edit on CodeSandbox** button.
@@ -126,7 +134,7 @@ describe('mode: button', () => {
       );
       \`\`\`
 
-      [![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/sdy9z?module=%2Fsrc%2Findex.js)
+      [![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/r1swv?module=%2Fsrc%2Findex.js)
 
       This one will render React component custom template
 
@@ -138,7 +146,7 @@ describe('mode: button', () => {
       }
       \`\`\`
 
-      [![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/fc0vt?module=%2Fsrc%2FApp.js)
+      [![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/21krf?module=%2Fsrc%2FApp.js)
       "
     `);
   });
@@ -166,13 +174,13 @@ describe('mode: iframe', () => {
       \`\`\`\n
     `;
 
-    const { contents } = await processor.process(md);
+    const { contents } = await processor.process(createFile(md));
 
     expect(contents).toMatchInlineSnapshot(`
       "The below code block will be replaced with an iFrame of embedded CodeSandbox.
 
       <iframe
-        src=\\"https://codesandbox.io/embed/sdy9z?fontsize=14px&hidenavigation=1&theme=dark&module=%2Fsrc%2Findex.js\\"
+        src=\\"https://codesandbox.io/embed/r1swv?fontsize=14px&hidenavigation=1&theme=dark&module=%2Fsrc%2Findex.js\\"
         style=\\"width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;\\"
         title=\\"React\\"
         allow=\\"geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb\\"
@@ -199,7 +207,7 @@ describe('mode: iframe', () => {
       \`\`\`\n
     `;
 
-    const { contents } = await processor.process(md);
+    const { contents } = await processor.process(createFile(md));
 
     expect(contents).toMatchInlineSnapshot(`
       "# remark-codesandbox example
@@ -207,7 +215,7 @@ describe('mode: iframe', () => {
       The below code block will be replaced with an iFrame of embedded CodeSandbox.
 
       <iframe
-        src=\\"https://codesandbox.io/embed/sdy9z?fontsize=14px&hidenavigation=1&theme=dark&module=%2Fsrc%2Findex.js\\"
+        src=\\"https://codesandbox.io/embed/r1swv?fontsize=14px&hidenavigation=1&theme=dark&module=%2Fsrc%2Findex.js\\"
         style=\\"width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;\\"
         title=\\"remark-codesandbox example\\"
         allow=\\"geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb\\"
@@ -227,7 +235,11 @@ describe('custom templates', () => {
       customTemplates: {
         'react-style': {
           extends: 'new',
-          entry: '/src/styles.css',
+          entry: 'src/styles.css',
+        },
+        file: {
+          extends: 'file:../../fixtures/custom-react-template',
+          entry: 'src/index.js',
         },
       },
       autoDeploy: true,
@@ -247,13 +259,13 @@ describe('custom templates', () => {
       \`\`\`\n
     `;
 
-    const { contents } = await processor.process(md);
+    const { contents } = await processor.process(createFile(md));
 
     expect(contents).toMatchInlineSnapshot(`
       "The below code block will create codesandbox based on custom template.
 
       <iframe
-        src=\\"https://codesandbox.io/embed/vi9bn?fontsize=14px&hidenavigation=1&theme=dark&module=%2Fsrc%2Fstyles.css\\"
+        src=\\"https://codesandbox.io/embed/hshzq?fontsize=14px&hidenavigation=1&theme=dark&module=%2Fsrc%2Fstyles.css\\"
         style=\\"width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;\\"
         title=\\"React\\"
         allow=\\"geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb\\"
@@ -262,6 +274,38 @@ describe('custom templates', () => {
       "
     `);
   });
+
+  (typeof window === 'undefined' ? test : test.skip)(
+    'extending from file system',
+    async () => {
+      const md = dedent`
+      The below code block will create codesandbox based on custom template.
+
+      \`\`\`jsx codesandbox=file
+      import React from 'react';
+      import ReactDOM from 'react-dom';
+
+      const rootElement = document.getElementById('root');
+      ReactDOM.render(<h1>Hello remark-codesandbox!</h1>, rootElement);
+      \`\`\`\n
+    `;
+
+      const { contents } = await processor.process(createFile(md));
+
+      expect(contents).toMatchInlineSnapshot(`
+      "The below code block will create codesandbox based on custom template.
+
+      <iframe
+        src=\\"https://codesandbox.io/embed/fkrsu?fontsize=14px&hidenavigation=1&theme=dark&module=%2Fsrc%2Findex.js\\"
+        style=\\"width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;\\"
+        title=\\"custom-react-template\\"
+        allow=\\"geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb\\"
+        sandbox=\\"allow-modals allow-forms allow-popups allow-scripts allow-same-origin\\"
+      ></iframe>
+      "
+    `);
+    }
+  );
 });
 
 // Legacy option
@@ -294,13 +338,13 @@ describe('DEPRECATED: iframe query', () => {
       \`\`\`\n
     `;
 
-    const { contents } = await processor.process(md);
+    const { contents } = await processor.process(createFile(md));
 
     expect(contents).toMatchInlineSnapshot(`
       "The below code block will create codesandbox and inject custom iframe query.
 
       <iframe
-        src=\\"https://codesandbox.io/embed/sdy9z?fontsize=13&hidenavigation=0&module=%2Fsrc%2Findex.js\\"
+        src=\\"https://codesandbox.io/embed/r1swv?fontsize=13&hidenavigation=0&module=%2Fsrc%2Findex.js\\"
         style=\\"width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;\\"
         title=\\"React\\"
         allow=\\"geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb\\"
@@ -340,13 +384,13 @@ describe('query with mode iframe', () => {
       \`\`\`\n
     `;
 
-    const { contents } = await processor.process(md);
+    const { contents } = await processor.process(createFile(md));
 
     expect(contents).toMatchInlineSnapshot(`
       "The below code block will create codesandbox and inject custom iframe query.
 
       <iframe
-        src=\\"https://codesandbox.io/embed/sdy9z?fontsize=13&hidenavigation=0&module=%2Fsrc%2Findex.js\\"
+        src=\\"https://codesandbox.io/embed/r1swv?fontsize=13&hidenavigation=0&module=%2Fsrc%2Findex.js\\"
         style=\\"width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;\\"
         title=\\"React\\"
         allow=\\"geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb\\"
@@ -386,11 +430,11 @@ describe('query with mode button', () => {
       \`\`\`\n
     `;
 
-    const { contents } = await processor.process(md);
+    const { contents } = await processor.process(createFile(md));
 
     expect(contents.slice(0, md.length)).toBe(md);
     expect(contents.slice(md.length + 1)).toMatchInlineSnapshot(`
-      "[![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/sdy9z?fontsize=13&hidenavigation=0&module=%2Fsrc%2Findex.js)
+      "[![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/r1swv?fontsize=13&hidenavigation=0&module=%2Fsrc%2Findex.js)
       "
     `);
   });
@@ -420,7 +464,7 @@ describe('autoDeploy false', () => {
       \`\`\`\n
     `;
 
-    const { contents } = await processor.process(md);
+    const { contents } = await processor.process(createFile(md));
 
     expect(contents.slice(0, md.length)).toBe(md);
     const button = contents.slice(md.length + 1).trim();

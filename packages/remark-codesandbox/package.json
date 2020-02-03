@@ -4,7 +4,7 @@
   "version": "0.4.0",
   "author": "Kai Hao",
   "license": "MIT",
-  "main": "index.js",
+  "main": "src/index.js",
   "browser": "dist/remark-codesandbox.js",
   "repository": {
     "type": "git",
@@ -12,28 +12,34 @@
     "directory": "packages/remark-codesandbox"
   },
   "scripts": {
-    "test:node": "jest --env node",
-    "test:browser": "jest --env jsdom",
-    "test": "yarn test:node && yarn test:browser",
-    "build": "microbundle build -i index.js -o dist -f cjs"
+    "build": "rollup -c"
   },
   "dependencies": {
     "codesandbox": "^2.1.11",
+    "codesandbox-import-utils": "2.1.11",
     "isomorphic-fetch": "^2.2.1",
     "mdast-util-to-string": "^1.0.7",
+    "recursive-readdir": "^2.2.2",
     "unist-builder": "^2.0.2",
     "unist-util-is": "^4.0.1",
     "unist-util-visit": "^2.0.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "@rollup/plugin-commonjs": "^11.0.2",
+    "@rollup/plugin-node-resolve": "^7.1.0",
+    "@rollup/plugin-replace": "^2.3.1",
     "babel-plugin-transform-async-to-promises": "^0.8.15",
     "dedent": "^0.7.0",
-    "microbundle": "^0.11.0",
-    "remark": "^11.0.2"
+    "remark": "^11.0.2",
+    "rollup": "^1.31.0",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-terser": "^5.2.0"
   },
   "files": [
     "gatsby.js",
-    "index.js",
+    "src",
     "dist"
   ],
   "keywords": [

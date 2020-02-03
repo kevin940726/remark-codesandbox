@@ -7,6 +7,9 @@ const u = require('unist-builder');
 const { getParameters } = require('codesandbox/lib/api/define');
 const fetch = require('isomorphic-fetch');
 
+const getTemplate = require('./getTemplate');
+const { parseMeta, mergeQuery } = require('./utils');
+
 let URLSearchParams;
 if (typeof window === 'undefined') {
   // URLSearchParams is added to the global object in node v10
@@ -24,82 +27,6 @@ const DEFAULT_CUSTOM_TEMPLATES = {
     entry: 'src/App.js',
   },
 };
-
-async function getTemplate(templates, templateID, customTemplates) {
-  if (templates.has(templateID)) {
-    return templates.get(templateID);
-  }
-
-  const baseTemplateID = customTemplates[templateID]
-    ? customTemplates[templateID].extends
-    : templateID;
-
-  if (templates.has(baseTemplateID)) {
-    const template = {
-      ...templates.get(baseTemplateID),
-      ...(customTemplates[templateID] || {}),
-    };
-
-    templates.set(templateID, template);
-    return template;
-  }
-
-  let data;
-  try {
-    const response = await fetch(
-      `https://codesandbox.io/api/v1/sandboxes/${baseTemplateID}`
-    ).then(res => res.json());
-
-    data = response.data;
-  } catch (err) {
-    console.error(
-      `Failed to get the sandbox template: ${baseTemplateID} (via ${templateID})`
-    );
-    throw err;
-  }
-
-  const template = {
-    ...data,
-    ...(customTemplates[templateID] || {}),
-  };
-
-  // Construct files/directories mappings
-  const mappings = {};
-
-  template.directories.forEach(dir => {
-    mappings[dir.shortid] = dir;
-  });
-  template.modules.forEach(file => {
-    mappings[file.shortid] = file;
-  });
-
-  function getFilePath(shortid) {
-    const dir = mappings[shortid];
-
-    if (!dir) {
-      return null;
-    }
-
-    return [getFilePath(dir.directory_shortid), dir.title]
-      .filter(Boolean)
-      .join('/');
-  }
-
-  // Construct files mappings
-  const files = {};
-
-  template.modules.forEach(file => {
-    const path = getFilePath(file.shortid);
-
-    files[path] = { content: file.code };
-  });
-
-  template.files = files;
-
-  templates.set(templateID, template);
-
-  return template;
-}
 
 function codesandbox(options = {}) {
   const templates = new Map();
@@ -130,7 +57,7 @@ function codesandbox(options = {}) {
     baseQuery = options.iframeQuery;
   }
 
-  return async function transformer(tree) {
+  return async function transformer(tree, file) {
     let title;
     const codes = [];
 
@@ -158,7 +85,8 @@ function codesandbox(options = {}) {
       const template = await getTemplate(
         templates,
         templateID,
-        customTemplates
+        customTemplates,
+        file
       );
 
       template.title = title || template.title;
@@ -250,41 +178,6 @@ function codesandbox(options = {}) {
       }
     }
   };
-}
-
-function parseMeta(metaString) {
-  const meta = {};
-
-  metaString.split(' ').forEach(str => {
-    const equalIndex = str.indexOf('=');
-
-    if (equalIndex > 0) {
-      const key = str.slice(0, equalIndex);
-      const value = str.slice(equalIndex + 1);
-
-      meta[key] = value;
-    }
-  });
-
-  return meta;
-}
-
-function mergeQuery(baseQuery, ...queries) {
-  const query = new URLSearchParams();
-
-  // Interesting that chaining multiple URLSearchParams calls returns a single one
-  // So baseQuery could be either `string`, `object`, `URLSearchParams`, or even `undefined`
-  new URLSearchParams(baseQuery).forEach((value, key) => {
-    query.set(key, value);
-  });
-
-  queries.forEach(params => {
-    new URLSearchParams(params).forEach((value, key) => {
-      query.set(key, value);
-    });
-  });
-
-  return query;
 }
 
 module.exports = codesandbox;
