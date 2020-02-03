@@ -10,16 +10,18 @@ const {
 
 const readFile = promisify(fs.readFile);
 
-async function fsTemplate(directoryPath, file) {
-  if (!file) {
-    throw new Error(
-      'No file object provided, are you running on a non-remark environment?'
-    );
-  }
+async function fsTemplate(directoryPath, rootPath) {
+  let absDirectoryPath;
 
-  const absDirectoryPath = path.isAbsolute(directoryPath)
-    ? directoryPath
-    : path.resolve(path.dirname(file.path), directoryPath);
+  if (path.isAbsolute(directoryPath)) {
+    absDirectoryPath = directoryPath;
+  } else if (!rootPath) {
+    throw new Error(
+      'No rootPath provided, are you running on a non-remark environment?'
+    );
+  } else {
+    absDirectoryPath = path.resolve(rootPath, directoryPath);
+  }
 
   const filePaths = await readdir(absDirectoryPath, [
     '.gitignore',

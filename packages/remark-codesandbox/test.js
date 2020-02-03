@@ -11,7 +11,8 @@ const codesandbox = require('./');
 function createFile(contents) {
   return {
     contents,
-    path: path.resolve(__dirname, 'readme.md'),
+    path: path.resolve(__dirname, 'README.md'),
+    dirname: __dirname,
   };
 }
 
@@ -238,7 +239,10 @@ describe('custom templates', () => {
           entry: 'src/styles.css',
         },
         file: {
-          extends: 'file:../../fixtures/custom-react-template',
+          extends: `file:${path.resolve(
+            __dirname,
+            '../../fixtures/custom-react-template'
+          )}`,
           entry: 'src/index.js',
         },
       },

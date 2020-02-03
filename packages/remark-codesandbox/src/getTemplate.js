@@ -5,7 +5,8 @@ async function getTemplate(templates, templateID, customTemplates, file) {
     return templates.get(templateID);
   }
 
-  const baseTemplateID = customTemplates[templateID]
+  const isCustomTemplate = !!customTemplates[templateID];
+  const baseTemplateID = isCustomTemplate
     ? customTemplates[templateID].extends
     : templateID;
 
@@ -28,7 +29,10 @@ async function getTemplate(templates, templateID, customTemplates, file) {
     }
 
     const directoryPath = baseTemplateID.slice('file:'.length);
-    data = await require('./fsTemplate')(directoryPath, file);
+    data = await require('./fsTemplate')(
+      directoryPath,
+      isCustomTemplate ? process.cwd() : file && file.dirname
+    );
   } else {
     try {
       const response = await fetch(
