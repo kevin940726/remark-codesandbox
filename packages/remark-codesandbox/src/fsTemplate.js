@@ -30,6 +30,9 @@ async function fsTemplate(directoryPath, rootPath) {
     'node_modules',
     'package-lock.json',
     'yarn.lock',
+    '.yarn',
+    '.pnp.js',
+    '.cache',
   ]);
 
   const files = {};
