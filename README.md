@@ -151,13 +151,15 @@ It's also possible to customize the url by appending _query parameters_. Just ap
 ```
 ````
 
-Want to use custom templates and keep them version controlled in the same repository? Use `file:` schema to load templates directly from file system! The below code will load the template from the path `./templates/vanilla-console`, relative to the markdown file. The file templates are directories with at least a `package.json` file.
+Want to use custom templates and keep them version controlled in the same repository? Use `file:` schema to load templates directly from the file system! The below code will load the template from the path `./templates/vanilla-console`, relative to the markdown file. The file templates are directories with at least a `package.json` file inside.
 
 ````md
 ```js codesandbox=file:./templates/vanilla-console
 // ...
 ```
 ````
+
+The path is too long to type every time? Consider creating it as a [custom template](#customTemplates). It's also the recommended way!
 
 > Pro tip: You can create file templates directly on [codesandbox.io/s](https://codesandbox.io/s) and download them by selecting `File` -> `Export to ZIP` in the menu bar. Unzip it somewhere and... Abrahadabra! You got yourself a file template!
 
@@ -226,11 +228,11 @@ interface TemplateInfo {
   extends: string;
   entry?: string;
   query?: string | { [key: string]: string } | URLSearchParams;
-  files?: { [filePath: string]: { content: string } };
+  files?: { [filePath: string]: { content: string | Object } };
 }
 ```
 
-- `extends`: To make defining custom templates easier, the plugin accepts a `extends` key to let you extend any existing template. The value can be any CodeSandbox id, or a `file:` path, or any other custom template id.
+- `extends`: To make defining custom templates easier, the plugin accepts a `extends` key to let you extend any existing template. The value can be any CodeSandbox id, or a `file:` path, or any other custom template id. If using `file:` paths, it's recommended to use absolute paths. Relative paths are relative to `process.cwd()` by default, in contrast to relative paths defining inline in the code blocks.
 - `entry`: The entry file to show in the template, it's also the file where the code block will replace to. Allowing users to use the same template/sandbox with a different file to override.
 - `query`: The query params to be appended to the generated url. It will _merge_ and override and key in the [`options.query`](#query) above. However, it will be merged and overridden by the query defining inline in the code block meta.
 - `files`: Additional files to merge and override the existing ones. The signature follows the [official API](https://codesandbox.io/docs/importing#how-it-works). It's recommended to use the `file:` path in `extends` field whenever possible as it's easier to manage and version control.
