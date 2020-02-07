@@ -8030,7 +8030,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "gatsby-remark-codesandbox@workspace:packages/gatsby-remark-codesandbox"
   dependencies:
-    remark-codesandbox: "workspace:packages/remark-codesandbox"
+    remark-codesandbox: "workspace:^0.5.1"
     to-vfile: ^6.0.0
   languageName: unknown
   linkType: soft
@@ -15514,7 +15514,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"remark-codesandbox@workspace:packages/remark-codesandbox":
+"remark-codesandbox@workspace:^0.5.1, remark-codesandbox@workspace:packages/remark-codesandbox":
   version: 0.0.0-use.local
   resolution: "remark-codesandbox@workspace:packages/remark-codesandbox"
   dependencies:
