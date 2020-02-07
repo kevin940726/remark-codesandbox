@@ -23,8 +23,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:."
       },
       {
-        "name": "gatsby-remark-codesandbox",
-        "reference": "workspace:packages/gatsby-remark-codesandbox"
+        "name": "gatsby-remark-inline-codesandbox",
+        "reference": "workspace:packages/gatsby-remark-inline-codesandbox"
       },
       {
         "name": "remark-codesandbox",
@@ -48,7 +48,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
     "fallbackExclusionList": [
       ["gatsby-md", ["workspace:examples/gatsby-md"]],
       ["gatsby-mdx", ["workspace:examples/gatsby-mdx"]],
-      ["gatsby-remark-codesandbox", ["workspace:packages/gatsby-remark-codesandbox"]],
+      ["gatsby-remark-inline-codesandbox", ["workspace:packages/gatsby-remark-inline-codesandbox"]],
       ["mdx", ["workspace:examples/mdx"]],
       ["remark-codesandbox", ["workspace:packages/remark-codesandbox"]],
       ["remark-codesandbox-mono", ["workspace:."]]
@@ -177,7 +177,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       61,
       60,
       58,
-      37,
+      44,
       30,
       22,
       21,
@@ -10063,7 +10063,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["gatsby-md", "workspace:examples/gatsby-md"],
             ["gatsby", "virtual:98051d5e048bfc5c8ad1ebcfac0c806f636993b14d1bfc91752f86bf31094781bf27440ef2961ab26081729c165f0b12720f31d3b8de58c8b1e698e49919e269#npm:2.19.12"],
-            ["gatsby-remark-codesandbox", "workspace:packages/gatsby-remark-codesandbox"],
+            ["gatsby-remark-inline-codesandbox", "workspace:packages/gatsby-remark-inline-codesandbox"],
             ["gatsby-source-filesystem", "virtual:98051d5e048bfc5c8ad1ebcfac0c806f636993b14d1bfc91752f86bf31094781bf27440ef2961ab26081729c165f0b12720f31d3b8de58c8b1e698e49919e269#npm:2.1.48"],
             ["gatsby-transformer-remark", "virtual:98051d5e048bfc5c8ad1ebcfac0c806f636993b14d1bfc91752f86bf31094781bf27440ef2961ab26081729c165f0b12720f31d3b8de58c8b1e698e49919e269#npm:2.6.50"],
             ["react", "npm:16.12.0"],
@@ -10081,7 +10081,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@mdx-js/react", "virtual:6b7b6a9a7b40894fa81802fa988b48c2ddfbb0434b6bd0d444c456c1b699e0eef89886b1464adf60981fd9c5de6e46d4dec48a1f83e672796fc30e18697cf0e0#npm:1.5.5"],
             ["gatsby", "virtual:6b7b6a9a7b40894fa81802fa988b48c2ddfbb0434b6bd0d444c456c1b699e0eef89886b1464adf60981fd9c5de6e46d4dec48a1f83e672796fc30e18697cf0e0#npm:2.19.10"],
             ["gatsby-plugin-mdx", "virtual:6b7b6a9a7b40894fa81802fa988b48c2ddfbb0434b6bd0d444c456c1b699e0eef89886b1464adf60981fd9c5de6e46d4dec48a1f83e672796fc30e18697cf0e0#npm:1.0.69"],
-            ["gatsby-remark-codesandbox", "workspace:packages/gatsby-remark-codesandbox"],
+            ["gatsby-remark-inline-codesandbox", "workspace:packages/gatsby-remark-inline-codesandbox"],
             ["gatsby-source-filesystem", "virtual:6b7b6a9a7b40894fa81802fa988b48c2ddfbb0434b6bd0d444c456c1b699e0eef89886b1464adf60981fd9c5de6e46d4dec48a1f83e672796fc30e18697cf0e0#npm:2.1.47"],
             ["react", "npm:16.12.0"],
             ["react-dom", "virtual:6b7b6a9a7b40894fa81802fa988b48c2ddfbb0434b6bd0d444c456c1b699e0eef89886b1464adf60981fd9c5de6e46d4dec48a1f83e672796fc30e18697cf0e0#npm:16.12.0"]
@@ -10259,11 +10259,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"
         }]
       ]],
-      ["gatsby-remark-codesandbox", [
-        ["workspace:packages/gatsby-remark-codesandbox", {
-          "packageLocation": "./packages/gatsby-remark-codesandbox/",
+      ["gatsby-remark-inline-codesandbox", [
+        ["workspace:packages/gatsby-remark-inline-codesandbox", {
+          "packageLocation": "./packages/gatsby-remark-inline-codesandbox/",
           "packageDependencies": [
-            ["gatsby-remark-codesandbox", "workspace:packages/gatsby-remark-codesandbox"],
+            ["gatsby-remark-inline-codesandbox", "workspace:packages/gatsby-remark-inline-codesandbox"],
             ["remark-codesandbox", "workspace:packages/remark-codesandbox"],
             ["to-vfile", "npm:6.0.0"]
           ],

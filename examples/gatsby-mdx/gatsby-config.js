@@ -14,7 +14,7 @@ module.exports = {
       options: {
         gatsbyRemarkPlugins: [
           {
-            resolve: require.resolve('gatsby-remark-codesandbox'),
+            resolve: require.resolve('gatsby-remark-inline-codesandbox'),
             options: {
               mode: 'button',
               customTemplates: {

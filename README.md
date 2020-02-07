@@ -34,7 +34,7 @@ yarn add -D remark-codesandbox
 Install the Gatsby version instead if you're using Gatsby.
 
 ```bash
-yarn add gatsby-remark-codesandbox
+yarn add gatsby-remark-inline-codesandbox
 ```
 
 ## Getting Started
@@ -69,7 +69,7 @@ module.exports = {
       options: {
         gatsbyRemarkPlugins: [
           {
-            resolve: 'gatsby-remark-codesandbox',
+            resolve: 'gatsby-remark-inline-codesandbox',
             options: {
               mode: 'button',
             },
@@ -91,7 +91,7 @@ module.exports = {
       options: {
         plugins: [
           {
-            resolve: 'gatsby-remark-codesandbox',
+            resolve: 'gatsby-remark-inline-codesandbox',
             options: {
               mode: 'button',
             },

@@ -1,9 +1,9 @@
-# gatsby-remark-codesandbox
+# gatsby-remark-inline-codesandbox
 
 ## Installation
 
 ```bash
-yarn add gatsby-remark-codesandbox
+yarn add gatsby-remark-inline-codesandbox
 ```
 
 ## Setup
@@ -18,7 +18,7 @@ module.exports = {
       options: {
         gatsbyRemarkPlugins: [
           {
-            resolve: 'gatsby-remark-codesandbox',
+            resolve: 'gatsby-remark-inline-codesandbox',
             options: {
               mode: 'button',
             },
@@ -40,7 +40,7 @@ module.exports = {
       options: {
         plugins: [
           {
-            resolve: 'gatsby-remark-codesandbox',
+            resolve: 'gatsby-remark-inline-codesandbox',
             options: {
               mode: 'button',
             },

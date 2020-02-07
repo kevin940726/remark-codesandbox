@@ -7855,7 +7855,7 @@ __metadata:
   resolution: "gatsby-md@workspace:examples/gatsby-md"
   dependencies:
     gatsby: ^2.19.7
-    gatsby-remark-codesandbox: "workspace:packages/gatsby-remark-codesandbox"
+    gatsby-remark-inline-codesandbox: "workspace:packages/gatsby-remark-inline-codesandbox"
     gatsby-source-filesystem: ^2.1.46
     gatsby-transformer-remark: ^2.6.50
     react: ^16.12.0
@@ -7871,7 +7871,7 @@ __metadata:
     "@mdx-js/react": ^1.1.5
     gatsby: ^2.13.50
     gatsby-plugin-mdx: ^1.0.0
-    gatsby-remark-codesandbox: "workspace:packages/gatsby-remark-codesandbox"
+    gatsby-remark-inline-codesandbox: "workspace:packages/gatsby-remark-inline-codesandbox"
     gatsby-source-filesystem: ^2.1.8
     react: ^16.8.6
     react-dom: ^16.8.6
@@ -8026,11 +8026,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"gatsby-remark-codesandbox@workspace:packages/gatsby-remark-codesandbox":
+"gatsby-remark-inline-codesandbox@workspace:packages/gatsby-remark-inline-codesandbox":
   version: 0.0.0-use.local
-  resolution: "gatsby-remark-codesandbox@workspace:packages/gatsby-remark-codesandbox"
+  resolution: "gatsby-remark-inline-codesandbox@workspace:packages/gatsby-remark-inline-codesandbox"
   dependencies:
-    remark-codesandbox: "workspace:^0.5.1"
+    remark-codesandbox: "workspace:^0.5.0"
     to-vfile: ^6.0.0
   languageName: unknown
   linkType: soft
@@ -15514,7 +15514,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"remark-codesandbox@workspace:^0.5.1, remark-codesandbox@workspace:packages/remark-codesandbox":
+"remark-codesandbox@workspace:^0.5.0, remark-codesandbox@workspace:packages/remark-codesandbox":
   version: 0.0.0-use.local
   resolution: "remark-codesandbox@workspace:packages/remark-codesandbox"
   dependencies:

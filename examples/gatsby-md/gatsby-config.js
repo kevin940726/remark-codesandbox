@@ -12,7 +12,7 @@ module.exports = {
       options: {
         plugins: [
           {
-            resolve: 'gatsby-remark-codesandbox',
+            resolve: 'gatsby-remark-inline-codesandbox',
             options: {
               mode: 'button',
             },

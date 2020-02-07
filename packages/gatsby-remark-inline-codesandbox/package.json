@@ -1,5 +1,5 @@
 {
-  "name": "gatsby-remark-codesandbox",
+  "name": "gatsby-remark-inline-codesandbox",
   "description": "🎩 Create CodeSandbox directly from code blocks",
   "version": "0.0.0",
   "author": "Kai Hao",
@@ -8,10 +8,10 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kevin940726/remark-codesandbox.git",
-    "directory": "packages/gatsby-remark-codesandbox"
+    "directory": "packages/gatsby-remark-inline-codesandbox"
   },
   "dependencies": {
-    "remark-codesandbox": "workspace:^0.5.1",
+    "remark-codesandbox": "workspace:^0.5.0",
     "to-vfile": "^6.0.0"
   },
   "files": [
