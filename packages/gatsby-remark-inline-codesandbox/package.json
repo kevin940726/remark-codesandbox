@@ -1,7 +1,7 @@
 {
   "name": "gatsby-remark-inline-codesandbox",
   "description": "🎩 Create CodeSandbox directly from code blocks",
-  "version": "0.0.0",
+  "version": "0.5.1",
   "author": "Kai Hao",
   "license": "MIT",
   "main": "index.js",
@@ -11,7 +11,7 @@
     "directory": "packages/gatsby-remark-inline-codesandbox"
   },
   "dependencies": {
-    "remark-codesandbox": "workspace:^0.5.0",
+    "remark-codesandbox": "workspace:^0.5.1",
     "to-vfile": "^6.0.0"
   },
   "files": [
