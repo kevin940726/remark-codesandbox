@@ -31,9 +31,15 @@
 yarn add -D remark-codesandbox
 ```
 
+Install the Gatsby version instead if you're using Gatsby.
+
+```bash
+yarn add gatsby-remark-codesandbox
+```
+
 ## Getting Started
 
-Import `remark-codesandbox` to your remark plugins.
+Import `remark-codesandbox` to your remark plugins. (Skip this step if you're using Gatsby)
 
 ```js
 const codesandbox = require('remark-codesandbox');
@@ -61,7 +67,36 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-mdx',
       options: {
-        remarkPlugins: [[codesandbox, { mode: 'button' }]],
+        gatsbyRemarkPlugins: [
+          {
+            resolve: 'gatsby-remark-codesandbox',
+            options: {
+              mode: 'button',
+            },
+          },
+        ],
+      },
+    },
+  ],
+};
+```
+
+[**Gatsby (gatsby-transformer-remark)**](https://www.gatsbyjs.org/packages/gatsby-transformer-remark)
+
+```js
+module.exports = {
+  plugins: [
+    {
+      resolve: 'gatsby-transformer-remark',
+      options: {
+        plugins: [
+          {
+            resolve: 'gatsby-remark-codesandbox',
+            options: {
+              mode: 'button',
+            },
+          },
+        ],
       },
     },
   ],

@@ -20,7 +20,6 @@
     "isomorphic-fetch": "^2.2.1",
     "mdast-util-to-string": "^1.0.7",
     "recursive-readdir": "^2.2.2",
-    "to-vfile": "^6.0.0",
     "unist-builder": "^2.0.2",
     "unist-util-is": "^4.0.1",
     "unist-util-visit": "^2.0.1"
@@ -40,8 +39,7 @@
   },
   "files": [
     "src",
-    "dist",
-    "gatsby.js"
+    "dist"
   ],
   "keywords": [
     "codesandbox",

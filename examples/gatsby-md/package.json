@@ -1,0 +1,16 @@
+{
+  "name": "gatsby-md",
+  "private": true,
+  "scripts": {
+    "build-example": "gatsby build",
+    "start-example": "gatsby develop"
+  },
+  "dependencies": {
+    "gatsby": "^2.19.7",
+    "gatsby-remark-codesandbox": "workspace:packages/gatsby-remark-codesandbox",
+    "gatsby-source-filesystem": "^2.1.46",
+    "gatsby-transformer-remark": "^2.6.50",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
+  }
+}
