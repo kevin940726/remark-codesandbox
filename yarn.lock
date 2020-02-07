@@ -14911,6 +14911,7 @@ __metadata:
     rollup: ^1.31.0
     rollup-plugin-babel: ^4.3.3
     rollup-plugin-terser: ^5.2.0
+    to-vfile: ^6.0.0
     unist-builder: ^2.0.2
     unist-util-is: ^4.0.1
     unist-util-visit: ^2.0.1
@@ -17124,6 +17125,16 @@ __metadata:
     regex-not: ^1.0.2
     safe-regex: ^1.1.0
   checksum: d8a861ff7d1d17c231eb5cdab3af97865cdaf1b407e7d4a09ba6c9c822b4e21bf774f0605d64e9624b387cc95ae321b1770e3fcb0a357db987fffcb61a9a72a1
+  languageName: node
+  linkType: hard
+
+"to-vfile@npm:^6.0.0":
+  version: 6.0.0
+  resolution: "to-vfile@npm:6.0.0"
+  dependencies:
+    is-buffer: ^2.0.0
+    vfile: ^4.0.0
+  checksum: 551d2f5ee73291e719b16d96c888913b0e1c807b1e39abfce566180c23c66715f0d765d0852646d3086f089d7657209e831ebddea530b2c64d9c0438720570c5
   languageName: node
   linkType: hard
 

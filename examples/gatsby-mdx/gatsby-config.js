@@ -6,10 +6,10 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-mdx',
       options: {
-        remarkPlugins: [
-          [
-            codesandbox,
-            {
+        gatsbyRemarkPlugins: [
+          {
+            resolve: require.resolve('remark-codesandbox/gatsby'),
+            options: {
               mode: 'button',
               customTemplates: {
                 'vanilla-console': {
@@ -21,7 +21,7 @@ module.exports = {
                 },
               },
             },
-          ],
+          },
         ],
       },
     },

@@ -17569,6 +17569,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["rollup", "npm:1.31.0"],
             ["rollup-plugin-babel", "virtual:99a04b83982c0182f6ee610f13d722fa43fd8f74ce6c4855b0669ee12700fb7decaa3babb02cf1ed1777d11b8259ac2c14c913a1225e699f2a4a3bfb12c8b9d7#npm:4.3.3"],
             ["rollup-plugin-terser", "virtual:99a04b83982c0182f6ee610f13d722fa43fd8f74ce6c4855b0669ee12700fb7decaa3babb02cf1ed1777d11b8259ac2c14c913a1225e699f2a4a3bfb12c8b9d7#npm:5.2.0"],
+            ["to-vfile", "npm:6.0.0"],
             ["unist-builder", "npm:2.0.2"],
             ["unist-util-is", "npm:4.0.1"],
             ["unist-util-visit", "npm:2.0.1"]
@@ -19998,6 +19999,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["to-regex-range", "npm:5.0.1"],
             ["is-number", "npm:7.0.0"]
+          ],
+          "linkType": "HARD"
+        }]
+      ]],
+      ["to-vfile", [
+        ["npm:6.0.0", {
+          "packageLocation": "./.yarn/cache/to-vfile-npm-6.0.0-f8cbe96d5f-1.zip/node_modules/to-vfile/",
+          "packageDependencies": [
+            ["to-vfile", "npm:6.0.0"],
+            ["is-buffer", "npm:2.0.4"],
+            ["vfile", "npm:4.0.2"]
           ],
           "linkType": "HARD"
         }]
