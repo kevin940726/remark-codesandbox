@@ -1,4 +1,6 @@
 .yarn/cache
 .yarn/unplugged
+# This is the Yarn build state; it's local to each clone
+.yarn/build-state.yml
 .DS_Store
 dist/
