@@ -8,7 +8,7 @@
 
 **Try it online on CodeSandbox!** (Yep, we're demoing CodeSandbox inside CodeSandbox, why not!?)
 
-[![Edit remark-codesandbox demo](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/kind-lamport-7n2uv?autoresize=1&fontsize=14&hidenavigation=1&module=%2Fsrc%2Findex.md&theme=dark)
+[![Edit remark-codesandbox demo](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/kevin940726/remark-codesandbox/tree/master/fixtures/demo?autoresize=1&fontsize=14&hidenavigation=1&module=%2Fsrc%2Findex.md&theme=dark)
 
 ## Features
 
