@@ -101,7 +101,10 @@ function codesandbox(options = {}) {
         );
       }
 
-      const overrideEntry = query.get('overrideEntry') || options.overrideEntry || true;
+      const overrideEntry =
+        query.get('overrideEntry') !== 'false' ||
+        options.overrideEntry ||
+        true;
 
       // Remove any options that are only for the plugin and not relevant to CodeSandbox
       const pluginOnlyQueryParams = ['overrideEntry'];
