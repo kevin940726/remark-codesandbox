@@ -108,7 +108,9 @@ function codesandbox(options = {}) {
 
       // Remove any options that are only for the plugin and not relevant to CodeSandbox
       const pluginOnlyQueryParams = ['overrideEntry'];
-      pluginOnlyQueryParams.forEach(query.delete);
+      pluginOnlyQueryParams.forEach(param => {
+        query.delete(param);
+      });
 
       const parameters = getParameters({
         files: {
