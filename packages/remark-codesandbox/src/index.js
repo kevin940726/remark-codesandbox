@@ -113,7 +113,7 @@ function codesandbox(options = {}) {
       const parameters = getParameters({
         files: {
           ...template.files,
-          ...(overrideEntry && {[template.entry]: { content: node.value }),
+          ...(overrideEntry && {[template.entry]: { content: node.value }}),
         },
       });
 
