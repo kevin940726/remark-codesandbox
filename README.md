@@ -204,6 +204,8 @@ If you would like to use the template as-is without any of the content of the co
 ```
 ````
 
+This `?overrideEntry=false` will not be set as a query parameter on the sandbox, since it is only important for the plugin itself.
+
 The path is too long to type every time? Consider creating it as a [custom template](#customTemplates). It's also the recommended way!
 
 > Pro tip: You can create file templates directly on [codesandbox.io/s](https://codesandbox.io/s) and download them by selecting `File` -> `Export to ZIP` in the menu bar. Unzip it somewhere and... Abrahadabra! You got yourself a file template!
