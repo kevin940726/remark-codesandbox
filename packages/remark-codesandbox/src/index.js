@@ -8,7 +8,7 @@ const { getParameters } = require('codesandbox/lib/api/define');
 const fetch = require('isomorphic-fetch');
 
 const getTemplate = require('./getTemplate');
-const { parseMeta, mergeQuery } = require('./utils');
+const { parseMeta, mergeQuery, toBasePath } = require('./utils');
 
 let URLSearchParams;
 if (typeof window === 'undefined') {
@@ -28,7 +28,7 @@ const DEFAULT_CUSTOM_TEMPLATES = {
   },
 };
 
-const PLUGIN_ONLY_QUERY_PARAMS = ['overrideEntry'];
+const PLUGIN_ONLY_QUERY_PARAMS = ['overrideEntry', 'entry'];
 
 function codesandbox(options = {}) {
   const templates = new Map();
@@ -94,26 +94,32 @@ function codesandbox(options = {}) {
 
       const query = mergeQuery(baseQuery, template.query, queryString);
 
+      const entryPath = query.has('entry')
+        ? toBasePath(query.get('entry'))
+        : template.entry;
+
       // If there is no predefined `module` key, then we assign it to the entry file
       if (!query.has('module')) {
         query.set(
           'module',
           // `entry` doesn't start with leading slash, but `module` requires it
-          template.entry.startsWith('/') ? template.entry : `/${template.entry}`
+          entryPath.startsWith('/') ? entryPath : `/${entryPath}`
         );
       }
 
-      const overrideEntry = query.get("overrideEntry") !== "false";
+      const overrideEntry = query.get('overrideEntry') !== 'false';
 
       // Remove any options that are only for the plugin and not relevant to CodeSandbox
-      PLUGIN_ONLY_QUERY_PARAMS.forEach(param => {
+      PLUGIN_ONLY_QUERY_PARAMS.forEach((param) => {
         query.delete(param);
       });
 
       const parameters = getParameters({
         files: {
           ...template.files,
-          ...(overrideEntry && {[template.entry]: { content: node.value }}),
+          ...(overrideEntry && {
+            [entryPath]: { content: node.value },
+          }),
         },
       });
 
@@ -127,7 +133,7 @@ function codesandbox(options = {}) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ parameters, json: 1 }),
           }
-        ).then(res => res.json());
+        ).then((res) => res.json());
 
         url = `https://codesandbox.io/s/${sandbox_id}?${query.toString()}`;
       } else {
