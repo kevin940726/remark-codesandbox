@@ -9,7 +9,7 @@ const prettier = require('prettier');
 
 const codesandbox = require('remark-codesandbox');
 
-const transform = code =>
+const transform = (code) =>
   babel.transform(code, {
     plugins: [
       '@babel/plugin-transform-react-jsx',
@@ -17,9 +17,12 @@ const transform = code =>
     ],
   }).code;
 
-const renderWithReact = async mdxCode => {
+const renderWithReact = async (filePath) => {
+  const mdxCode = await fs.readFile(filePath);
+
   const jsx = await mdx(mdxCode, {
     skipExport: true,
+    filepath: filePath,
     remarkPlugins: [[codesandbox, { mode: 'meta' }]],
   });
   const code = transform(jsx);
@@ -35,7 +38,6 @@ const renderWithReact = async mdxCode => {
   return renderToStaticMarkup(elementWithProvider);
 };
 
-fs.readFile(path.resolve(__dirname, 'index.mdx'))
-  .then(renderWithReact)
-  .then(html => prettier.format(html, { parser: 'html' }))
+renderWithReact(path.resolve(__dirname, 'index.mdx'))
+  .then((html) => prettier.format(html, { parser: 'html' }))
   .then(fs.writeFile.bind(null, path.resolve(__dirname, 'index.html')));
