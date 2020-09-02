@@ -188,11 +188,23 @@ It's also possible to customize the url by appending _query parameters_. Just ap
 
 Want to use custom templates and keep them version controlled in the same repository? Use `file:` schema to load templates directly from the file system! The below code will load the template from the path `./templates/vanilla-console`, relative to the markdown file. The file templates are directories with at least a `package.json` file inside.
 
+As in the other examples, the content of the code block will replace the entry file in the template.
+
 ````md
 ```js codesandbox=file:./templates/vanilla-console
-// ...
+console.log('this code will replace the entry file content');
 ```
 ````
+
+If you would like to use the template as-is without any of the content of the code block, add the `?overrideEntry=false` query string:
+
+````md
+```js codesandbox=file:./templates/vanilla-console?overrideEntry=false
+// This code will not be added to the sandbox
+```
+````
+
+This `?overrideEntry=false` will not be set as a query parameter on the sandbox, since it is only important for the plugin itself.
 
 The path is too long to type every time? Consider creating it as a [custom template](#customTemplates). It's also the recommended way!
 

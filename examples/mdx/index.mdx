@@ -21,3 +21,18 @@ export default function App() {
   return <h1>Hello remark-codesandbox!</h1>;
 }
 ```
+
+This one is versioned alongside the code 🤯
+
+```js codesandbox=file:./my-template
+document.getElementById('app').innerHTML = `
+<h1>Hello remark-codesandbox</h1>
+`
+```
+
+If you would like to use the template as-is without any of the content of the
+code block, add the `?overrideEntry=false` query string:
+
+```js codesandbox=file:./my-template?overrideEntry=false
+// This code will not be added to the sandbox
+```

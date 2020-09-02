@@ -28,6 +28,8 @@ const DEFAULT_CUSTOM_TEMPLATES = {
   },
 };
 
+const PLUGIN_ONLY_QUERY_PARAMS = ['overrideEntry'];
+
 function codesandbox(options = {}) {
   const templates = new Map();
   const mode = options.mode || 'meta';
@@ -101,10 +103,17 @@ function codesandbox(options = {}) {
         );
       }
 
+      const overrideEntry = query.get("overrideEntry") !== "false";
+
+      // Remove any options that are only for the plugin and not relevant to CodeSandbox
+      PLUGIN_ONLY_QUERY_PARAMS.forEach(param => {
+        query.delete(param);
+      });
+
       const parameters = getParameters({
         files: {
           ...template.files,
-          [template.entry]: { content: node.value },
+          ...(overrideEntry && {[template.entry]: { content: node.value }}),
         },
       });
 
