@@ -29,21 +29,14 @@ function getFilePath(mappings, shortid) {
  *  - `file:` path
  *  - custom sandbox id
  */
-async function getTemplate(templates, templateID, customTemplates, file) {
-  if (templates.has(templateID)) {
-    return templates.get(templateID);
-  }
-
+async function getTemplate(templateID, customTemplates, file) {
   if (customTemplates[templateID]) {
     const baseTemplate = await getTemplate(
-      templates,
       customTemplates[templateID].extends,
       customTemplates
     );
 
     const template = mergeTemplates(baseTemplate, customTemplates[templateID]);
-
-    templates.set(templateID, template);
 
     return template;
   }
@@ -64,9 +57,10 @@ async function getTemplate(templates, templateID, customTemplates, file) {
     );
   } else {
     try {
-      const response = await fetch(
+      let response = await fetch(
         `https://codesandbox.io/api/v1/sandboxes/${templateID}`
-      ).then(res => res.json());
+      );
+      response = await response.json();
 
       template = response.data;
     } catch (err) {
@@ -77,17 +71,17 @@ async function getTemplate(templates, templateID, customTemplates, file) {
     // Construct files/directories mappings
     const mappings = {};
 
-    (template.directories || []).forEach(dir => {
+    (template.directories || []).forEach((dir) => {
       mappings[dir.shortid] = dir;
     });
-    (template.modules || []).forEach(file => {
+    (template.modules || []).forEach((file) => {
       mappings[file.shortid] = file;
     });
 
     // Construct files mappings
     const files = {};
 
-    (template.modules || []).forEach(file => {
+    (template.modules || []).forEach((file) => {
       const path = getFilePath(mappings, file.shortid);
 
       files[path] = { content: file.code };
@@ -96,9 +90,18 @@ async function getTemplate(templates, templateID, customTemplates, file) {
     template.files = files;
   }
 
-  templates.set(templateID, template);
-
   return template;
 }
 
-module.exports = getTemplate;
+module.exports = async function getTemplateFromCache(
+  templates,
+  templateID,
+  customTemplates,
+  file
+) {
+  if (!templates.has(templateID)) {
+    templates.set(templateID, getTemplate(templateID, customTemplates, file));
+  }
+
+  return templates.get(templateID);
+};

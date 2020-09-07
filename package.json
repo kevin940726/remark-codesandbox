@@ -23,6 +23,8 @@
     "release": "yarn workspace remark-codesandbox npm publish"
   },
   "devDependencies": {
+    "dedent": "^0.7.0",
+    "escape-string-regexp": "^4.0.0",
     "jest": "^24.9.0",
     "jest-pnp-resolver": "^1.2.1",
     "prettier": "1.19.1"

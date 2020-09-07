@@ -191,6 +191,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         [null, {
           "packageLocation": "./",
           "packageDependencies": [
+            ["dedent", "npm:0.7.0"],
+            ["escape-string-regexp", "npm:4.0.0"],
             ["jest", "npm:24.9.0"],
             ["jest-pnp-resolver", "virtual:45361836888ceb8936522065d28bf3d453b957b693e5ce85a1a6547016998a9ed504b10b0debcc893864fb1ed6657c39a2120b30344f5afb5dee79de5b94968c#npm:1.2.1"],
             ["prettier", "npm:1.19.1"]
@@ -8330,6 +8332,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/escape-string-regexp-npm-1.0.5-3284de402f-1.zip/node_modules/escape-string-regexp/",
           "packageDependencies": [
             ["escape-string-regexp", "npm:1.0.5"]
+          ],
+          "linkType": "HARD"
+        }],
+        ["npm:4.0.0", {
+          "packageLocation": "./.yarn/cache/escape-string-regexp-npm-4.0.0-4b531d8d59-1.zip/node_modules/escape-string-regexp/",
+          "packageDependencies": [
+            ["escape-string-regexp", "npm:4.0.0"]
           ],
           "linkType": "HARD"
         }]
@@ -18292,6 +18301,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",
           "packageDependencies": [
             ["remark-codesandbox-mono", "workspace:."],
+            ["dedent", "npm:0.7.0"],
+            ["escape-string-regexp", "npm:4.0.0"],
             ["jest", "npm:24.9.0"],
             ["jest-pnp-resolver", "virtual:45361836888ceb8936522065d28bf3d453b957b693e5ce85a1a6547016998a9ed504b10b0debcc893864fb1ed6657c39a2120b30344f5afb5dee79de5b94968c#npm:1.2.1"],
             ["prettier", "npm:1.19.1"]

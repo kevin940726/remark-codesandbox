@@ -91,7 +91,7 @@ describe('mode: button', () => {
     const { contents } = await processor.process(createFile(md));
 
     expect(contents.slice(0, md.length)).toBe(md);
-    expect(contents.slice(md.length + 1)).toMatchString`
+    expect(contents.slice(md.length + 1)).toMatchStringWithPatterns`
       "[![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/${SANDBOX_ID_PATTERN}?module=%2Fsrc%2Findex.js)
       "
     `;
@@ -124,7 +124,7 @@ describe('mode: button', () => {
 
     const { contents } = await processor.process(createFile(md));
 
-    expect(contents).toMatchString`
+    expect(contents).toMatchStringWithPatterns`
       "The below code block will have a **Edit on CodeSandbox** button.
 
       \`\`\`jsx codesandbox=react
@@ -179,7 +179,7 @@ describe('mode: iframe', () => {
 
     const { contents } = await processor.process(createFile(md));
 
-    expect(contents).toMatchString`
+    expect(contents).toMatchStringWithPatterns`
       "The below code block will be replaced with an iFrame of embedded CodeSandbox.
 
       <iframe
@@ -212,7 +212,7 @@ describe('mode: iframe', () => {
 
     const { contents } = await processor.process(createFile(md));
 
-    expect(contents).toMatchString`
+    expect(contents).toMatchStringWithPatterns`
       "# remark-codesandbox example
 
       The below code block will be replaced with an iFrame of embedded CodeSandbox.
@@ -267,7 +267,7 @@ describe('custom templates', () => {
 
     const { contents } = await processor.process(createFile(md));
 
-    expect(contents).toMatchString`
+    expect(contents).toMatchStringWithPatterns`
       "The below code block will create codesandbox based on custom template.
 
       <iframe
@@ -298,7 +298,7 @@ describe('custom templates', () => {
 
       const { contents } = await processor.process(createFile(md));
 
-      expect(contents).toMatchString`
+      expect(contents).toMatchStringWithPatterns`
         "The below code block will create codesandbox based on custom template.
 
         <iframe
@@ -346,7 +346,7 @@ describe('DEPRECATED: iframe query', () => {
 
     const { contents } = await processor.process(createFile(md));
 
-    expect(contents).toMatchString`
+    expect(contents).toMatchStringWithPatterns`
       "The below code block will create codesandbox and inject custom iframe query.
 
       <iframe
@@ -392,7 +392,7 @@ describe('query with mode iframe', () => {
 
     const { contents } = await processor.process(createFile(md));
 
-    expect(contents).toMatchString`
+    expect(contents).toMatchStringWithPatterns`
       "The below code block will create codesandbox and inject custom iframe query.
 
       <iframe
@@ -439,7 +439,7 @@ describe('query with mode button', () => {
     const { contents } = await processor.process(createFile(md));
 
     expect(contents.slice(0, md.length)).toBe(md);
-    expect(contents.slice(md.length + 1)).toMatchString`
+    expect(contents.slice(md.length + 1)).toMatchStringWithPatterns`
       "[![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/${SANDBOX_ID_PATTERN}?fontsize=13&hidenavigation=0&module=%2Fsrc%2Findex.js)
       "
     `;
