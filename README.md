@@ -186,6 +186,14 @@ It's also possible to customize the url by appending _query parameters_. Just ap
 ```
 ````
 
+A special query param `entry` is introduced to allow you to override the specific file with the contents of the code block.
+
+````md
+```js codesandbox=new?entry=src/App.js
+// Override `src/App.js` rather than the default `src/index.js` with this contents of the code block
+```
+````
+
 Want to use custom templates and keep them version controlled in the same repository? Use `file:` schema to load templates directly from the file system! The below code will load the template from the path `./templates/vanilla-console`, relative to the markdown file. The file templates are directories with at least a `package.json` file inside.
 
 As in the other examples, the content of the code block will replace the entry file in the template.

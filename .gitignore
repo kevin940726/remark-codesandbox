@@ -4,3 +4,4 @@
 .yarn/build-state.yml
 .DS_Store
 dist/
+.vscode/
