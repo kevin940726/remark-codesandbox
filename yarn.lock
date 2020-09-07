@@ -8058,7 +8058,7 @@ fsevents@~2.1.1:
   version: 0.0.0-use.local
   resolution: "gatsby-remark-inline-codesandbox@workspace:packages/gatsby-remark-inline-codesandbox"
   dependencies:
-    remark-codesandbox: "workspace:^0.7.0"
+    remark-codesandbox: "workspace:^0.7.1"
     to-vfile: ^6.0.0
   languageName: unknown
   linkType: soft
@@ -15544,7 +15544,7 @@ fsevents@~2.1.1:
   languageName: unknown
   linkType: soft
 
-"remark-codesandbox@workspace:^0.7.0, remark-codesandbox@workspace:packages/remark-codesandbox":
+"remark-codesandbox@workspace:^0.7.1, remark-codesandbox@workspace:packages/remark-codesandbox":
   version: 0.0.0-use.local
   resolution: "remark-codesandbox@workspace:packages/remark-codesandbox"
   dependencies:

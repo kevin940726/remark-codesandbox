@@ -1,7 +1,7 @@
 {
   "name": "remark-codesandbox",
   "description": "🎩 Create CodeSandbox directly from code blocks",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "author": "Kai Hao",
   "license": "MIT",
   "main": "src/index.js",
