@@ -9,6 +9,7 @@ const path = require('path');
 const codesandbox = require('./');
 
 const SANDBOX_ID_PATTERN = /[a-zA-Z0-9]{5}/;
+const PARAMETER_PATTERN = /[a-zA-Z0-9-_]+/;
 
 function createFile(contents) {
   return {
@@ -484,5 +485,79 @@ describe('autoDeploy false', () => {
     expect(button.slice(beginning.length, -ending.length)).toMatch(
       SANDBOX_ID_PATTERN
     );
+  });
+});
+
+describe('overrideEntry', () => {
+  let processor;
+
+  beforeAll(() => {
+    processor = remark().use(codesandbox, {
+      mode: 'button',
+    });
+  });
+
+  test('overrideEntry with override range lines', async () => {
+    const md = dedent`
+      The below code block will create codesandbox and inject custom query.
+
+      \`\`\`css codesandbox=react?overrideEntry=4-12
+      ReactDOM.render(
+        <h1>Hello remark-codesandbox!</h1>,
+        document.getElementById('root')
+      );
+      \`\`\`\n
+    `;
+
+    const { contents } = await processor.process(createFile(md));
+
+    expect(contents).toMatchStringWithPatterns`
+      "The below code block will create codesandbox and inject custom query.
+
+      \`\`\`css codesandbox=react?overrideEntry=4-12
+      ReactDOM.render(
+        <h1>Hello remark-codesandbox!</h1>,
+        document.getElementById('root')
+      );
+      \`\`\`
+
+      [![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/api/v1/sandboxes/define?parameters=${PARAMETER_PATTERN}&query=module%3D%252Fsrc%252Findex.js)
+      "
+    `;
+  });
+
+  test('overrideEntry false', async () => {
+    const md = dedent`
+      The below code block will create codesandbox and inject custom query.
+
+      \`\`\`css codesandbox=react?overrideEntry=false
+      import React from 'react';
+      import ReactDOM from 'react-dom';
+
+      ReactDOM.render(
+        <h1>Hello remark-codesandbox!</h1>,
+        document.getElementById('root')
+      );
+      \`\`\`\n
+    `;
+
+    const { contents } = await processor.process(createFile(md));
+
+    expect(contents).toMatchStringWithPatterns`
+      "The below code block will create codesandbox and inject custom query.
+
+      \`\`\`css codesandbox=react?overrideEntry=false
+      import React from 'react';
+      import ReactDOM from 'react-dom';
+
+      ReactDOM.render(
+        <h1>Hello remark-codesandbox!</h1>,
+        document.getElementById('root')
+      );
+      \`\`\`
+
+      [![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/api/v1/sandboxes/define?parameters=${PARAMETER_PATTERN}&query=module%3D%252Fsrc%252Findex.js)
+      "
+    `;
   });
 });

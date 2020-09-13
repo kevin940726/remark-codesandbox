@@ -107,19 +107,33 @@ function codesandbox(options = {}) {
         );
       }
 
-      const overrideEntry = query.get('overrideEntry') !== 'false';
+      const overrideEntry = query.get('overrideEntry');
 
       // Remove any options that are only for the plugin and not relevant to CodeSandbox
       PLUGIN_ONLY_QUERY_PARAMS.forEach((param) => {
         query.delete(param);
       });
 
+      let entryFileContent = template.files[entryPath].content;
+      if (!overrideEntry) {
+        entryFileContent = node.value;
+      } else if (overrideEntry !== 'false') {
+        const [overrideRangeStart, overrideRangeEnd] = overrideEntry
+          .split('-')
+          .map((line) => Number(line));
+
+        const lines = entryFileContent.split('\n');
+        entryFileContent = [
+          ...lines.slice(0, overrideRangeStart - 1),
+          node.value,
+          ...lines.slice(overrideRangeEnd),
+        ].join('\n');
+      }
+
       const parameters = getParameters({
         files: {
           ...template.files,
-          ...(overrideEntry && {
-            [entryPath]: { content: node.value },
-          }),
+          [entryPath]: { content: entryFileContent },
         },
       });
 
