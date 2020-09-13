@@ -501,7 +501,7 @@ describe('overrideEntry', () => {
     const md = dedent`
       The below code block will create codesandbox and inject custom query.
 
-      \`\`\`css codesandbox=react?overrideEntry=4-12
+      \`\`\`js codesandbox=react?overrideEntry=4-12
       ReactDOM.render(
         <h1>Hello remark-codesandbox!</h1>,
         document.getElementById('root')
@@ -514,7 +514,7 @@ describe('overrideEntry', () => {
     expect(contents).toMatchStringWithPatterns`
       "The below code block will create codesandbox and inject custom query.
 
-      \`\`\`css codesandbox=react?overrideEntry=4-12
+      \`\`\`js codesandbox=react?overrideEntry=4-12
       ReactDOM.render(
         <h1>Hello remark-codesandbox!</h1>,
         document.getElementById('root')
@@ -530,7 +530,7 @@ describe('overrideEntry', () => {
     const md = dedent`
       The below code block will create codesandbox and inject custom query.
 
-      \`\`\`css codesandbox=react?overrideEntry=false
+      \`\`\`js codesandbox=react?overrideEntry=false
       import React from 'react';
       import ReactDOM from 'react-dom';
 
@@ -546,7 +546,7 @@ describe('overrideEntry', () => {
     expect(contents).toMatchStringWithPatterns`
       "The below code block will create codesandbox and inject custom query.
 
-      \`\`\`css codesandbox=react?overrideEntry=false
+      \`\`\`js codesandbox=react?overrideEntry=false
       import React from 'react';
       import ReactDOM from 'react-dom';
 

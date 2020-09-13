@@ -124,9 +124,11 @@ function codesandbox(options = {}) {
 
         const lines = entryFileContent.split('\n');
         entryFileContent = [
-          ...lines.slice(0, overrideRangeStart - 1),
+          ...lines.slice(0, Number(overrideRangeStart) - 1),
           node.value,
-          ...lines.slice(overrideRangeEnd),
+          ...(overrideRangeEnd === ''
+            ? []
+            : lines.slice(Number(overrideRangeEnd))),
         ].join('\n');
       }
 
