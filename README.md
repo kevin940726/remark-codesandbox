@@ -178,22 +178,6 @@ It's also possible to use any existing sandbox. Just get the `id` of the sandbox
 ```
 ````
 
-It's also possible to customize the url by appending _query parameters_. Just append them after the sandbox id. All [options](https://codesandbox.io/docs/embedding#embed-options) are allowed.
-
-````md
-```js codesandbox=new?codemirror=1&fontsize=12
-// ...
-```
-````
-
-A special query param `entry` is introduced to allow you to override the specific file with the contents of the code block.
-
-````md
-```js codesandbox=new?entry=src/App.js
-// Override `src/App.js` rather than the default `src/index.js` with this contents of the code block
-```
-````
-
 Want to use custom templates and keep them version controlled in the same repository? Use `file:` schema to load templates directly from the file system! The below code will load the template from the path `./templates/vanilla-console`, relative to the markdown file. The file templates are directories with at least a `package.json` file inside.
 
 As in the other examples, the content of the code block will replace the entry file in the template.
@@ -204,6 +188,60 @@ console.log('this code will replace the entry file content');
 ```
 ````
 
+The path is too long to type every time? Consider creating it as a [custom template](#customTemplates). It's also the recommended way!
+
+> Pro tip: You can create file templates directly on [codesandbox.io/s](https://codesandbox.io/s) and download them by selecting `File` -> `Export to ZIP` in the menu bar. Unzip it somewhere and... Abrahadabra! You got yourself a file template!
+
+### Query params
+
+It's also possible to customize the url by appending _query parameters_. Just append them after the sandbox id. All [options](https://codesandbox.io/docs/embedding#embed-options) are allowed.
+
+````md
+```js codesandbox=new?codemirror=1&fontsize=12
+// ...
+```
+````
+
+There are several _special query params_ you can set inline. All the special query params below will not be passed to the generated CodeSandbox URL, as they are not officially supported.
+
+#### `entry`
+
+A special query param `entry` is introduced to allow you to override the specific file with the contents of the code block.
+
+````md
+```js codesandbox=new?entry=src/App.js
+// Override `src/App.js` rather than the default `src/index.js` with this contents of the code block
+```
+````
+
+#### `overrideEntry`
+
+By default, contents in the code block will override all the contents in the entry file. You can change this by setting the special query param `overrideEntry`.
+
+Set `overrideEntry` to _a range of line numbers_ to specify which part of the entry file you want the code block to override. The below example will replace the entry file of the `react` template (`src/index.js`) from line 4 to 12 with the contents in the code block.
+
+````md
+```js codesandbox=react?overrideEntry=4-12
+ReactDOM.render(
+  <h1>Hello remark-codesandbox!</h1>,
+  document.getElementById('root')
+);
+```
+````
+
+With this tip, you can avoid passing unrelated code into the code block, so that the readers can focus on what really matters.
+
+There's a handy shortcut to only specify the start line without the end line to replace the whole entry file starting from a specific line number without knowing how long it is.
+
+````md
+```js codesandbox=react?overrideEntry=4-
+ReactDOM.render(
+  <h1>Hello remark-codesandbox!</h1>,
+  document.getElementById('root')
+);
+```
+````
+
 If you would like to use the template as-is without any of the content of the code block, add the `?overrideEntry=false` query string:
 
 ````md
@@ -211,12 +249,6 @@ If you would like to use the template as-is without any of the content of the co
 // This code will not be added to the sandbox
 ```
 ````
-
-This `?overrideEntry=false` will not be set as a query parameter on the sandbox, since it is only important for the plugin itself.
-
-The path is too long to type every time? Consider creating it as a [custom template](#customTemplates). It's also the recommended way!
-
-> Pro tip: You can create file templates directly on [codesandbox.io/s](https://codesandbox.io/s) and download them by selecting `File` -> `Export to ZIP` in the menu bar. Unzip it somewhere and... Abrahadabra! You got yourself a file template!
 
 ### Options
 
