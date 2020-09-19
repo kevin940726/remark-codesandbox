@@ -118,9 +118,7 @@ function codesandbox(options = {}) {
       if (!overrideEntry) {
         entryFileContent = node.value;
       } else if (overrideEntry !== 'false') {
-        const [overrideRangeStart, overrideRangeEnd] = overrideEntry
-          .split('-')
-          .map((line) => Number(line));
+        const [overrideRangeStart, overrideRangeEnd] = overrideEntry.split('-');
 
         const lines = entryFileContent.split('\n');
         entryFileContent = [
