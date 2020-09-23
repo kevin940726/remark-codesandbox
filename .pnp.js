@@ -10276,7 +10276,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["gatsby-remark-inline-codesandbox", "workspace:packages/gatsby-remark-inline-codesandbox"],
             ["remark-codesandbox", "workspace:packages/remark-codesandbox"],
-            ["to-vfile", "npm:6.0.0"]
+            ["to-gatsby-remark-plugin", "npm:0.1.0"]
           ],
           "linkType": "SOFT"
         }]
@@ -20703,6 +20703,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"
         }]
       ]],
+      ["to-gatsby-remark-plugin", [
+        ["npm:0.1.0", {
+          "packageLocation": "./.yarn/cache/to-gatsby-remark-plugin-npm-0.1.0-1f09c418a3-1.zip/node_modules/to-gatsby-remark-plugin/",
+          "packageDependencies": [
+            ["to-gatsby-remark-plugin", "npm:0.1.0"],
+            ["to-vfile", "npm:6.1.0"]
+          ],
+          "linkType": "HARD"
+        }]
+      ]],
       ["to-object-path", [
         ["npm:0.3.0", {
           "packageLocation": "./.yarn/cache/to-object-path-npm-0.3.0-241b5ffa9c-1.zip/node_modules/to-object-path/",
@@ -20755,10 +20765,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["to-vfile", [
-        ["npm:6.0.0", {
-          "packageLocation": "./.yarn/cache/to-vfile-npm-6.0.0-f8cbe96d5f-1.zip/node_modules/to-vfile/",
+        ["npm:6.1.0", {
+          "packageLocation": "./.yarn/cache/to-vfile-npm-6.1.0-2f0d0b4806-1.zip/node_modules/to-vfile/",
           "packageDependencies": [
-            ["to-vfile", "npm:6.0.0"],
+            ["to-vfile", "npm:6.1.0"],
             ["is-buffer", "npm:2.0.4"],
             ["vfile", "npm:4.0.2"]
           ],

@@ -1,8 +1,4 @@
-const vfile = require('to-vfile');
+const toGatsbyRemarkPlugin = require('to-gatsby-remark-plugin');
 const codesandbox = require('remark-codesandbox');
 
-module.exports = ({ markdownAST, markdownNode }, options) => {
-  const file = vfile(markdownNode.fileAbsolutePath);
-
-  return codesandbox(options)(markdownAST, file);
-};
+module.exports = toGatsbyRemarkPlugin(codesandbox);

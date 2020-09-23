@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "remark-codesandbox": "workspace:^0.8.1",
-    "to-vfile": "^6.0.0"
+    "to-gatsby-remark-plugin": "^0.1.0"
   },
   "files": [
     "index.js"

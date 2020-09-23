@@ -8058,8 +8058,8 @@ fsevents@~2.1.1:
   version: 0.0.0-use.local
   resolution: "gatsby-remark-inline-codesandbox@workspace:packages/gatsby-remark-inline-codesandbox"
   dependencies:
-    remark-codesandbox: "workspace:^0.7.1"
-    to-vfile: ^6.0.0
+    remark-codesandbox: "workspace:^0.8.1"
+    to-gatsby-remark-plugin: ^0.1.0
   languageName: unknown
   linkType: soft
 
@@ -15544,7 +15544,7 @@ fsevents@~2.1.1:
   languageName: unknown
   linkType: soft
 
-"remark-codesandbox@workspace:^0.7.1, remark-codesandbox@workspace:packages/remark-codesandbox":
+"remark-codesandbox@workspace:^0.8.1, remark-codesandbox@workspace:packages/remark-codesandbox":
   version: 0.0.0-use.local
   resolution: "remark-codesandbox@workspace:packages/remark-codesandbox"
   dependencies:
@@ -17786,6 +17786,15 @@ resolve@^1.11.0:
   languageName: node
   linkType: hard
 
+"to-gatsby-remark-plugin@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "to-gatsby-remark-plugin@npm:0.1.0"
+  dependencies:
+    to-vfile: ^6.1.0
+  checksum: b65cce63205ee0b7ac0a851ccbfff29b222fdc3d8b15e1567ee4d09a66c99fd327691fc78da31fa5671e7a9d9133b5e5b69ed7b37d1feb60ba2d577ddceff24d
+  languageName: node
+  linkType: hard
+
 "to-object-path@npm:^0.3.0":
   version: 0.3.0
   resolution: "to-object-path@npm:0.3.0"
@@ -17833,13 +17842,13 @@ resolve@^1.11.0:
   languageName: node
   linkType: hard
 
-"to-vfile@npm:^6.0.0":
-  version: 6.0.0
-  resolution: "to-vfile@npm:6.0.0"
+"to-vfile@npm:^6.1.0":
+  version: 6.1.0
+  resolution: "to-vfile@npm:6.1.0"
   dependencies:
     is-buffer: ^2.0.0
     vfile: ^4.0.0
-  checksum: 551d2f5ee73291e719b16d96c888913b0e1c807b1e39abfce566180c23c66715f0d765d0852646d3086f089d7657209e831ebddea530b2c64d9c0438720570c5
+  checksum: cd06d6b0b2f4b9f5174c68e25a9db58114c0859c3872ee16c909daa07f0947df228a1ae199137cf14d3016a48a0cc5351299f486fe5c86f7362967cb72046d8a
   languageName: node
   linkType: hard
 
