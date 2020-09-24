@@ -39,8 +39,10 @@ async function fsTemplate(directoryPath, rootPath) {
 
   for (const filePath of filePaths) {
     const relativePath = path.relative(absDirectoryPath, filePath);
+    // CodeSandbox expects posix path
+    const posixRelativePath = toPosixPath(relativePath);
 
-    files[relativePath] = {
+    files[posixRelativePath] = {
       content: await readFile(filePath, 'utf8'),
     };
   }
@@ -61,6 +63,10 @@ async function fsTemplate(directoryPath, rootPath) {
     entry,
     title: path.basename(absDirectoryPath),
   };
+}
+
+function toPosixPath(pathString) {
+  return pathString.split(path.sep).join(path.posix.sep);
 }
 
 module.exports = fsTemplate;
