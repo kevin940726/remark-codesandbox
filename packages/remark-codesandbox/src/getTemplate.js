@@ -18,9 +18,12 @@ function getFilePath(mappings, shortid) {
     return null;
   }
 
-  return [getFilePath(mappings, dir.directory_shortid), dir.title]
-    .filter(Boolean)
-    .join('/');
+  return (
+    [getFilePath(mappings, dir.directory_shortid), dir.title]
+      .filter(Boolean)
+      // CodeSandbox expects posix path
+      .join('/')
+  );
 }
 
 /**
