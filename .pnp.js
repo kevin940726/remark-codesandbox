@@ -18289,6 +18289,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["rollup", "npm:1.31.0"],
             ["rollup-plugin-babel", "virtual:99a04b83982c0182f6ee610f13d722fa43fd8f74ce6c4855b0669ee12700fb7decaa3babb02cf1ed1777d11b8259ac2c14c913a1225e699f2a4a3bfb12c8b9d7#npm:4.3.3"],
             ["rollup-plugin-terser", "virtual:99a04b83982c0182f6ee610f13d722fa43fd8f74ce6c4855b0669ee12700fb7decaa3babb02cf1ed1777d11b8259ac2c14c913a1225e699f2a4a3bfb12c8b9d7#npm:5.2.0"],
+            ["to-gatsby-remark-plugin", "npm:0.1.0"],
             ["unist-builder", "npm:2.0.2"],
             ["unist-util-is", "npm:4.0.1"],
             ["unist-util-visit", "npm:2.0.1"]

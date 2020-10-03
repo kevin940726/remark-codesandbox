@@ -20,6 +20,7 @@
     "isomorphic-fetch": "^2.2.1",
     "mdast-util-to-string": "^1.0.7",
     "recursive-readdir": "^2.2.2",
+    "to-gatsby-remark-plugin": "^0.1.0",
     "unist-builder": "^2.0.2",
     "unist-util-is": "^4.0.1",
     "unist-util-visit": "^2.0.1"

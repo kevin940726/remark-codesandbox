@@ -8058,7 +8058,7 @@ fsevents@~2.1.1:
   version: 0.0.0-use.local
   resolution: "gatsby-remark-inline-codesandbox@workspace:packages/gatsby-remark-inline-codesandbox"
   dependencies:
-    remark-codesandbox: "workspace:^0.8.1"
+    remark-codesandbox: "workspace:^0.8.2"
     to-gatsby-remark-plugin: ^0.1.0
   languageName: unknown
   linkType: soft
@@ -15544,7 +15544,7 @@ fsevents@~2.1.1:
   languageName: unknown
   linkType: soft
 
-"remark-codesandbox@workspace:^0.8.1, remark-codesandbox@workspace:packages/remark-codesandbox":
+"remark-codesandbox@workspace:^0.8.2, remark-codesandbox@workspace:packages/remark-codesandbox":
   version: 0.0.0-use.local
   resolution: "remark-codesandbox@workspace:packages/remark-codesandbox"
   dependencies:
@@ -15564,6 +15564,7 @@ fsevents@~2.1.1:
     rollup: ^1.31.0
     rollup-plugin-babel: ^4.3.3
     rollup-plugin-terser: ^5.2.0
+    to-gatsby-remark-plugin: ^0.1.0
     unist-builder: ^2.0.2
     unist-util-is: ^4.0.1
     unist-util-visit: ^2.0.1
