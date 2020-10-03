@@ -31,12 +31,6 @@
 yarn add -D remark-codesandbox
 ```
 
-Install the Gatsby version instead if you're using Gatsby.
-
-```bash
-yarn add gatsby-remark-inline-codesandbox
-```
-
 ## Getting Started
 
 Import `remark-codesandbox` to your remark plugins. (Skip this step if you're using Gatsby)
@@ -61,6 +55,8 @@ mdx(mdxCode, {
 
 [**Gatsby (gatsby-plugin-mdx)**](https://www.gatsbyjs.org/docs/mdx/plugins/#remark-plugins)
 
+Use the `/gatsby` endpoint to use the Gatsby's version of the plugin.
+
 ```js
 module.exports = {
   plugins: [
@@ -69,7 +65,7 @@ module.exports = {
       options: {
         gatsbyRemarkPlugins: [
           {
-            resolve: 'gatsby-remark-inline-codesandbox',
+            resolve: 'remark-codesandbox/gatsby',
             options: {
               mode: 'button',
             },
@@ -83,6 +79,8 @@ module.exports = {
 
 [**Gatsby (gatsby-transformer-remark)**](https://www.gatsbyjs.org/packages/gatsby-transformer-remark)
 
+Use the `/gatsby` endpoint to use the Gatsby's version of the plugin.
+
 ```js
 module.exports = {
   plugins: [
@@ -91,7 +89,7 @@ module.exports = {
       options: {
         plugins: [
           {
-            resolve: 'gatsby-remark-inline-codesandbox',
+            resolve: 'remark-codesandbox/gatsby',
             options: {
               mode: 'button',
             },
