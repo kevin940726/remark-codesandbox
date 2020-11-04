@@ -185,7 +185,7 @@ describe('mode: iframe', () => {
 
       <iframe
         src="https://codesandbox.io/embed/${SANDBOX_ID_PATTERN}?fontsize=14px&hidenavigation=1&theme=dark&module=%2Fsrc%2Findex.js"
-        style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
+        style="width:100%; height:500px; border:0; border-radius:4px; overflow:hidden;"
         title="React"
         allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb"
         sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
@@ -220,7 +220,7 @@ describe('mode: iframe', () => {
 
       <iframe
         src="https://codesandbox.io/embed/${SANDBOX_ID_PATTERN}?fontsize=14px&hidenavigation=1&theme=dark&module=%2Fsrc%2Findex.js"
-        style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
+        style="width:100%; height:500px; border:0; border-radius:4px; overflow:hidden;"
         title="remark-codesandbox example"
         allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb"
         sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
@@ -273,7 +273,7 @@ describe('custom templates', () => {
 
       <iframe
         src="https://codesandbox.io/embed/${SANDBOX_ID_PATTERN}?fontsize=14px&hidenavigation=1&theme=dark&module=%2Fsrc%2Fstyles.css"
-        style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
+        style="width:100%; height:500px; border:0; border-radius:4px; overflow:hidden;"
         title="React"
         allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb"
         sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
@@ -304,7 +304,7 @@ describe('custom templates', () => {
 
         <iframe
           src="https://codesandbox.io/embed/${SANDBOX_ID_PATTERN}?fontsize=14px&hidenavigation=1&theme=dark&module=%2Fsrc%2Findex.js"
-          style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
+          style="width:100%; height:500px; border:0; border-radius:4px; overflow:hidden;"
           title="custom-react-template"
           allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb"
           sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
@@ -352,7 +352,7 @@ describe('DEPRECATED: iframe query', () => {
 
       <iframe
         src="https://codesandbox.io/embed/${SANDBOX_ID_PATTERN}?fontsize=13&hidenavigation=0&module=%2Fsrc%2Findex.js"
-        style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
+        style="width:100%; height:500px; border:0; border-radius:4px; overflow:hidden;"
         title="React"
         allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb"
         sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
@@ -398,7 +398,38 @@ describe('query with mode iframe', () => {
 
       <iframe
         src="https://codesandbox.io/embed/${SANDBOX_ID_PATTERN}?fontsize=13&hidenavigation=0&module=%2Fsrc%2Findex.js"
-        style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
+        style="width:100%; height:500px; border:0; border-radius:4px; overflow:hidden;"
+        title="React"
+        allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb"
+        sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
+      ></iframe>
+      "
+    `;
+  });
+
+  test('with style override', async () => {
+    const md = dedent`
+      The below code block will create codesandbox and inject custom iframe query.
+
+      \`\`\`css codesandbox=react?fontsize=13&style=height:1000px
+      import React from 'react';
+      import ReactDOM from 'react-dom';
+
+      ReactDOM.render(
+        <h1>Hello remark-codesandbox!</h1>,
+        document.getElementById('root')
+      );
+      \`\`\`\n
+    `;
+
+    const { contents } = await processor.process(createFile(md));
+
+    expect(contents).toMatchStringWithPatterns`
+      "The below code block will create codesandbox and inject custom iframe query.
+
+      <iframe
+        src="https://codesandbox.io/embed/${SANDBOX_ID_PATTERN}?fontsize=13&hidenavigation=0&module=%2Fsrc%2Findex.js"
+        style="width:100%; height:1000px; border:0; border-radius:4px; overflow:hidden;"
         title="React"
         allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb"
         sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
