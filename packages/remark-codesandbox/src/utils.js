@@ -66,8 +66,37 @@ function toBasePath(path) {
   return path;
 }
 
+/**
+ * Merge style strings into one
+ *
+ * @param {string} baseStyle
+ * @param {string} style
+ * @return {string}
+ */
+function mergeStyle(baseStyle, style) {
+  function toEntries(styleString) {
+    return styleString
+      .trim()
+      .split(';')
+      .map((entry) => entry.trim())
+      .filter(Boolean)
+      .map((entry) => entry.split(':').map((value) => value.trim()));
+  }
+
+  const baseStyleEntries = toEntries(baseStyle);
+  const styleEntries = toEntries(style);
+
+  const mergedObject = Object.fromEntries(
+    baseStyleEntries.concat(styleEntries)
+  );
+  const mergedEntries = Object.entries(mergedObject);
+
+  return mergedEntries.map((entry) => entry.join(':') + ';').join(' ');
+}
+
 module.exports = {
   parseMeta,
   mergeQuery,
   toBasePath,
+  mergeStyle,
 };

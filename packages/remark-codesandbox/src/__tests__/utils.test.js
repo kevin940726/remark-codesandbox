@@ -1,4 +1,4 @@
-const { parseMeta, mergeQuery, toBasePath } = require('../utils');
+const { parseMeta, mergeQuery, toBasePath, mergeStyle } = require('../utils');
 
 describe('parseMeta', () => {
   test('Parse a single meta string', () => {
@@ -89,5 +89,42 @@ describe('toBasePath', () => {
     const path = '/src/index.js';
 
     expect(toBasePath(path)).toBe('src/index.js');
+  });
+});
+
+describe('mergeStyle', () => {
+  test('Merge with base style', () => {
+    const baseStyle =
+      'width:100%; height:500px; border:0; border-radius:4px; overflow:hidden;';
+    const style = 'height: 1000px';
+
+    const mergedStyle = mergeStyle(baseStyle, style);
+
+    expect(mergedStyle).toBe(
+      'width:100%; height:1000px; border:0; border-radius:4px; overflow:hidden;'
+    );
+  });
+
+  test('Merge with empty style', () => {
+    const baseStyle =
+      'width:100%; height:500px; border:0; border-radius:4px; overflow:hidden;';
+    const style = '';
+
+    const mergedStyle = mergeStyle(baseStyle, style);
+
+    expect(mergedStyle).toBe(baseStyle);
+  });
+
+  test('Merge with multiple styles', () => {
+    const baseStyle =
+      'width:100%; height:500px; border:0; border-radius:4px; overflow:hidden;';
+    const style =
+      'height: 1000px; width: 600px; height: 1200px ;border-radius:  0 ';
+
+    const mergedStyle = mergeStyle(baseStyle, style);
+
+    expect(mergedStyle).toBe(
+      'width:600px; height:1200px; border:0; border-radius:0; overflow:hidden;'
+    );
   });
 });

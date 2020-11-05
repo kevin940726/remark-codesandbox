@@ -8,7 +8,7 @@ const { getParameters } = require('codesandbox/lib/api/define');
 const fetch = require('isomorphic-fetch');
 
 const getTemplate = require('./getTemplate');
-const { parseMeta, mergeQuery, toBasePath } = require('./utils');
+const { parseMeta, mergeQuery, toBasePath, mergeStyle } = require('./utils');
 
 let URLSearchParams;
 if (typeof window === 'undefined') {
@@ -28,7 +28,7 @@ const DEFAULT_CUSTOM_TEMPLATES = {
   },
 };
 
-const PLUGIN_ONLY_QUERY_PARAMS = ['overrideEntry', 'entry'];
+const PLUGIN_ONLY_QUERY_PARAMS = ['overrideEntry', 'entry', 'style'];
 
 function codesandbox(options = {}) {
   const templates = new Map();
@@ -109,6 +109,8 @@ function codesandbox(options = {}) {
 
       const overrideEntry = query.get('overrideEntry');
 
+      const style = query.get('style') || '';
+
       // Remove any options that are only for the plugin and not relevant to CodeSandbox
       PLUGIN_ONLY_QUERY_PARAMS.forEach((param) => {
         query.delete(param);
@@ -181,7 +183,10 @@ function codesandbox(options = {}) {
           const iframe = u('html', {
             value: `<iframe
   src="${autoDeploy ? url.replace('/s/', '/embed/') : `${url}&embed=1`}"
-  style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
+  style="${mergeStyle(
+    'width:100%; height:500px; border:0; border-radius:4px; overflow:hidden;',
+    style
+  )}"
   title="${template.title || ''}"
   allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb"
   sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"

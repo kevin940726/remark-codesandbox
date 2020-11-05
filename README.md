@@ -33,7 +33,7 @@ yarn add -D remark-codesandbox
 
 ## Getting Started
 
-Import `remark-codesandbox` to your remark plugins. (Skip this step if you're using Gatsby)
+Import `remark-codesandbox` to your remark plugins.
 
 ```js
 const codesandbox = require('remark-codesandbox');
@@ -245,6 +245,24 @@ If you would like to use the template as-is without any of the content of the co
 ````md
 ```js codesandbox=file:./templates/vanilla-console?overrideEntry=false
 // This code will not be added to the sandbox
+```
+````
+
+#### `style`
+
+You can also override the default style used in the **iframe** mode.
+
+````md
+```js codesandbox=react?style=height:1000px
+// The generated iframe will have height of 1000px instead of the default 500px
+```
+````
+
+You can pass in multiple styles separated by `;`. All styles will **merge** and override the default styles (`width:100%; height:500px; border:0; border-radius:4px; overflow:hidden;`).
+
+````md
+```js codesandbox=react?style=height:1000px;width:600px;
+// The result style will be: "width:600px; height:1000px; border:0; border-radius:4px; overflow:hidden;"
 ```
 ````
 
