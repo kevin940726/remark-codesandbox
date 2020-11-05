@@ -11,7 +11,7 @@
     "directory": "packages/gatsby-remark-inline-codesandbox"
   },
   "dependencies": {
-    "remark-codesandbox": "workspace:^0.9.0",
+    "remark-codesandbox": "workspace:^0.10.0",
     "to-gatsby-remark-plugin": "^0.1.0"
   },
   "files": [
