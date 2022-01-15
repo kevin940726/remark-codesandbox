@@ -116,6 +116,9 @@ function codesandbox(options = {}) {
         query.delete(param);
       });
 
+      if(!template.files[entryPath]) {
+        throw new Error(`${entryPath} is not present in ${templateID}.\n${JSON.stringify(template, null, 2)}`)
+      }
       let entryFileContent = template.files[entryPath].content;
       if (!overrideEntry) {
         entryFileContent = node.value;
